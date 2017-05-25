@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <style type="text/css">
+  </style>
+  <script type="text/javascript" src="../javascript/jquery-1.3.1.min.js" ></script>
+  <script language="javascript" type="text/javascript">
+  // <!-- 
+
+  function start_map(){
+  	var win_h = $(window).height() - 69;
+  	var win_w = $(window).width();
+  	if (win_h%2 == 1) win_h = win_h -1;
+  	if (win_w%2 == 1) win_w = win_w -1;  	
+  	document.getElementById('getwin_w').value = win_w;
+  	document.getElementById('getwin_h').value = win_h;
+  	document.forms[0].submit();
+
+  }
+  // -->
+  </script>
+</head>
+<body onload="start_map()"  >
+<FORM action="map.php" method="post" target="_self" >
+      <INPUT type="hidden" name="win_w"  id="getwin_w">
+      <INPUT type="hidden" name="win_h" id="getwin_h">
+   </FORM>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+#! /usr/bin/env python
+
+import datetime
+import os
+import pg
+import glob
+
+
+#delete unsaved aoi from ncgap
+ncgap_con =  pg.connect(dbname='ncgap', host='localhost', user='postgres')
+querystr = 'delete from aoi where username is null'
+ncgap_con.query(querystr)
+
+#delete unsaved aoi from swgap
+swgap_con =  pg.connect(dbname='swgap', host='localhost', user='postgres')
+swgap_con.query(querystr)
+
+#delete unsaved aoi from segap
+segap_con =  pg.connect(dbname='segap', host='localhost', user='postgres')
+segap_con.query(querystr)
+
+#delete unsaved aoi from prgap
+prgap_con =  pg.connect(dbname='prgap', host='localhost', user='postgres')
+prgap_con.query(querystr)
+
+
+date_obj = datetime.datetime.today()
+ncgap_file = date_obj.strftime("ncgap_%m_%d_%Y")
+swgap_file = date_obj.strftime("swgap_%m_%d_%Y")
+segap_file = date_obj.strftime("segap_%m_%d_%Y")
+prgap_file = date_obj.strftime("prgap_%m_%d_%Y")
+
+#dump ncgap
+ncgap_dump = "su  postgres -c '/usr/local/pgsql/bin/pg_dump ncgap > /data/db_archives/%s'" % ncgap_file
+os.system(ncgap_dump)
+
+
+#dump swgap
+swgap_dump = "su  postgres -c '/usr/local/pgsql/bin/pg_dump swgap > /data/db_archives/%s'" % swgap_file
+os.system(swgap_dump)
+
+
+#dump segap
+segap_dump = "su  postgres -c '/usr/local/pgsql/bin/pg_dump segap > /data/db_archives/%s'" % segap_file
+os.system(segap_dump)
+
+
+#dump prgap
+prgap_dump = "su  postgres -c '/usr/local/pgsql/bin/pg_dump prgap > /data/db_archives/%s'" % prgap_file
+os.system(prgap_dump)
+
+
+
+

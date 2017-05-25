@@ -1,0 +1,12 @@
+MonoBoldOblique		/usr/local/freefont-20090104/FreeMonoBoldOblique.ttf
+FreeMonoBold		/usr/local/freefont-20090104/FreeMonoBold.ttf
+MonoOblique		/usr/local/freefont-20090104/FreeMonoOblique.ttf
+Mono			/usr/local/freefont-20090104/FreeMono.ttf
+SansBoldOblique		/usr/local/freefont-20090104/FreeSansBoldOblique.ttf
+SansBold		/usr/local/freefont-20090104/FreeSansBold.ttf
+FreeSansOblique		/usr/local/freefont-20090104/FreeSansOblique.ttf
+Sans			/usr/local/freefont-20090104/FreeSans.ttf
+SerifBoldItalic		/usr/local/freefont-20090104/FreeSerifBoldItalic.ttf
+SerifBold		/usr/local/freefont-20090104/FreeSerifBold.ttf
+SerifItalic		/usr/local/freefont-20090104/FreeSerifItalic.ttf
+Serif			/usr/local/freefont-20090104/FreeSerif.ttf

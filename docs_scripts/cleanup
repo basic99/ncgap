@@ -1,0 +1,31 @@
+#!/bin/bash
+
+rm -rf /data/server_temp/*
+rm -rf /data/website_data/richness_export/*
+
+export GISBASE=/usr/local/grass-6.4.0svn
+export PATH=/usr/local/grass-6.4.0svn/bin:/usr/local/grass-6.4.0svn/scripts:/usr/local/bin:/usr/bin:/bin
+export GISRC=/var/www/html/ncgap/grassrc
+
+#$GISBASE = "/usr/local/grass-6.4.0svn";
+#$GISRC = "/var/www/html/ncgap/grassrc";
+#$PATH = "/usr/local/grass-6.4.0svn/bin:/usr/local/grass-6.4.0svn/scripts:/usr/local/bin:/usr/bin:/bin";
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/swgap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/segap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/prgap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+

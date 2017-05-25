@@ -1,0 +1,437 @@
+/* Global Styles */
+
+body	{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	color: Black;
+	background-color: White;
+	background-image: none;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+a:link	 {
+	color: #990000;
+	text-decoration : none;
+}
+
+a:active	{
+	color: #ff0000;
+	text-decoration: none;
+	}
+
+a:visited	{
+	color: #cc0000;
+	text-decoration: none;
+	}
+
+h1        {
+	font-size: 150%;
+	font-weight: bold;
+	color: #990000;
+	}
+
+h2        {
+	font-size: 120%;
+	font-weight: bold;
+	color: #990000;
+	}
+
+h3        {
+	font-size: 100%;
+	font-weight: bold;
+	color: #990000;
+	}
+
+
+div       {
+	margin-left: 20px;
+	margin-right: 20px;
+	}
+
+li         {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-weight: bold;
+	color: #990000;
+	}
+
+
+/* ID Styles */
+
+#rollovers	{
+	list-style: url(none) none outside;
+	width: 100px;
+	}
+	
+#rollovers ul {
+	padding: 0;
+	border: none;
+	margin: 0px;
+	list-style-type: none;
+	}
+	
+#rollovers li {
+	margin: 0px;
+	list-style-type: none;
+	}
+
+#rollovers li a {
+	display: block;
+	margin: 0px;
+	background: #FFFFFF;
+	color: #990000;
+	line-height:12px;
+	font: bold 11px Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	padding: 6px 3px 6px 3px;
+	text-transform: lowercase;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #000000;
+}
+	
+	
+#rollovers li a:hover {
+	background: #DDDDDD;
+	border-bottom: 1px solid #000000;
+	color: #660000;
+	text-decoration: none;
+	}
+	
+#rollovers li a:active {
+	background: #DDDDDD;
+	color: #000000;
+	text-decoration: none;
+	}
+
+
+
+/* Class Styles */
+
+.invsm {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20%;
+	font-style: normal;
+	font-weight: normal;
+	color: transparent;
+	background-color: #FFFFFF;
+	background-image: none;
+	}
+.inv   {
+	color : transparent;
+	}
+
+.Bb150 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 150%;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb150c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 150%;
+	font-style: normal;
+	font-weight: bold;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb120 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 120%;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb120r {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 120%;
+	font-style: normal;
+	font-weight: bold;
+	color: Red;
+	background-color: transparent;
+	background-image: none;
+}
+
+.Bb120c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 120%;
+	font-style: normal;
+	font-weight: bold;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb100 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb100c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: normal;
+	font-weight: bold;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn100 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn100c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bi100 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: italic;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bi100c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	font-style: italic;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb80 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bb80c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: bold;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bbu80 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+	background-color: transparent;
+	background-image: none;
+	border-bottom : thin solid Black;
+	}
+
+.Bn80 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn80c {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bi80 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size : 80%;
+	font-style : italic;
+	font-weight: normal;
+	color : #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn70 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 70%;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn70c     {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 70%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn60 {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size: 60%;
+	font-style: normal;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn60c {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size: 60%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Bn50{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 50%;
+	font-style : normal;
+	font-weight : normal;
+	color : Black;
+	background-color : transparent;
+	background-image : none;
+	}
+
+.Bn50c {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 50%;
+	font-style : normal;
+	font-weight : normal;
+	color : #990000;
+	background-color : transparent;
+	background-image : none;
+	}
+
+.Bi50{
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 50%;
+	font-style : italic;
+	font-weight : normal;
+	color : Black;
+	background-color : transparent;
+	background-image : none;
+	}
+
+.Snu80 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+	background-color: transparent;
+	background-image: none;
+	border-bottom : thin solid Black;
+	}
+
+.Sn80c {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Snu80c {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 80%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	border-bottom : thin solid #990000;
+	}
+
+.Si80 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 80%;
+	font-style: italic;
+	font-weight: normal;
+	color: #000000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Si80c {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 80%;
+	font-style: italic;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Sn60 {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 60%;
+	font-style: normal;
+	font-weight: normal;
+	color: Black;
+	background-color: transparent;
+	background-image: none;
+	}
+
+.Sn60c {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 60%;
+	font-style: normal;
+	font-weight: normal;
+	color: #990000;
+	background-color: transparent;
+	background-image: none;
+	}
+

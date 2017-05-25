@@ -1,0 +1,6 @@
+#!/bin/bash
+{
+date
+echo
+/home/grassmonkey/admin_scripts/db_back.py
+} >> /var/log/db_back.log 2>&1

@@ -1,0 +1,4 @@
+GISDBASE: /pub/grass
+LOCATION_NAME: n_carolina
+MAPSET: webserv
+GRASS_GUI: tcltk

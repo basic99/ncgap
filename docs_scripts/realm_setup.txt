@@ -1,0 +1,214 @@
+
+create /var/www/html and chown to manhattan, then cd and run:
+----cvs -d :ext:grassmonkey@192.168.1.18/var/lib/cvs/sandbox co -r ncgap_ajax ncgap
+----or can instead create local cvs
+mkdir /var/lib/cvsroot -- cd to this dir
+tar -xvf cvs_2_9_2010  --- create copy of cvs from tar file from metacomet
+cvs -d /var/lib/cvsroot/sandbox co  -r ncgap_ajax ncgap
+
+install httpd-2.2.3-31.el5_4.2 with package manager
+/sbin/chkconfig httpd on -- turn on service
+
+
+changing selinux settings for setup
+ls -Z /usr/sbin/httpd -- show initial type context
+-rwxr-xr-x  root root system_u:object_r:httpd_exec_t   /usr/sbin/httpd -- results 
+chcon -t unconfined_exec_t /usr/sbin/httpd  -- change and restart httpd
+
+http://download.fedora.redhat.com/pub/epel/5/x86_64/ and get
+epel-release-5-3.noarch.rpm
+
+add user postgres
+http://yum.pgsqlrpms.org/8.4/ and install
+postgresql-server-8.4.2-1PGDG.rhel5
+postgresql-devel-8.4.2-1PGDG.rhel5
+
+initdb /var/lib/pgsql/data -- run as postgres
+/sbin/chkconfig postgresql on -- turn on service
+ls -Z /usr/bin/postgres  -- note security context
+-rwxr-xr-x  root root system_u:object_r:postgresql_exec_t /usr/bin/postgres --results
+
+http://proj.maptools.org/ -- get latest proj
+proj-4.7.0/
+mv proj-datumgrid-1.5.zip  /usr/local/proj-4.7.0/nad -- unzip
+./configure, make,  make install
+
+vim /etc/ld.so.conf.d/locallib.conf -- add /usr/local/lib
+/sbin/ldconfig -v
+
+http://trac.osgeo.org/geos/ -- configure, make install latest geos
+
+http://postgis.refractions.net/download/ --get postgis configure, make install
+createdb ncgap
+createlang plpgsql ncgap
+psql -d ncgap -f postgis/postgis.sql  --skip
+psql -d ncgap -f spatial_ref_sys.sql  --skip
+pg_restore -d ncgap ncgap_01_28_2010  -- restore database with custom format
+
+http://expat.sourceforge.net/  -- install expat from source
+http://trac.osgeo.org/gdal/wiki/DownloadSource -- configure, make ,install gdal with pg
+
+http://www.fftw.org/download.html 
+cd fftw-2.1.5
+CFLAGS="-fPIC" ./configure, make, make install
+
+-- due to g.region -d bug in 6.4.0RC5 get svn release of GRASS 
+http://grass.osgeo.org/grass64/source/snapshot/ 
+add tcl and tk dev packages
+
+CFLAGS="-g -Wall" ./configure  --enable-64bit --with-libs=/usr/lib64 
+make, make install
+add /usr/local/grass-6.4.0svn/lib to /etc/ld.so.conf.d/locallib.conf and /sbin/ldconfig -v
+
+./configure --with-pg --with-grass=/usr/local/grass-6.4.0svn -- recompile gdal with GRASS
+
+--install php 5.3 from source, first get httpd-devel from repository
+./configure --with-pdo-pgsql  --with-pgsql --with-regex=system --with-apxs2
+make, install
+-- create dir /pub/server_temp/ and make r/w by all
+
+/etc/httpd/conf/httpd.conf -- edits 
+Timeout 1200
+KeepAlive On  --not sure if this is needed or wanted
+User webserv
+CheckSpelling On
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+Alias /server_temp/  /pub/server_temp/
+<Directory "/pub/server_temp">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+</Directory>
+
+http://www.antigrain.com/download/index.html  ---install AGG
+AGGCXXFLAGS = -O3 -I/usr/X11R6/include -L/usr/X11R6/lib -fPIC    --edit Makefile.in.Linux, just type make!
+  
+install mapserver-5.4.2, use patch for bug #3207
+patch <patch.diff
+
+./configure --with-proj --with-php=/usr/local/php-5.3.1 --with-agg=/usr/local/agg-2.5 --with-freetype \
+--with-ogr --with-gdal --with-wmsclient --with-postgis=/usr/bin/pg_config --without-eppl \
+--with-wfs --with-wfsclient --enable-debug
+
+cp  php.ini-development /usr/local/lib/php.ini
+extension_dir = "/usr/local/lib/php/extensions" --edits to php.ini
+extension = "php_mapscript.so"
+error_reporting = E_ALL & ~E_NOTICE  --replaces error_reporting = E_ALL | E_STRICT
+include_path = ".:/var/www/html/ncgap/includes:/var/www/html/swgap/includes:/var/www/html/segap/includes:/var/www/html/prgap/includes"	
+
+mkdir /usr/local/lib/php/extensions
+cp  mapscript/php3/php_mapscript.so  /usr/local/lib/php/extensions
+
+rm -rf /pub/grass/n_carolina/webserv  -- delete webserv mapset from n_carolina
+
+Delete the directory /pub/grass/n_carolina/webserv. Log out of grassmonkey, and log into webserv, start GRASS and create a mapset named webserv. Logout out and back into grassmonkey and run cp /home/webserv/.grassrc6 /var/www/html/ncgap/grassrc.
+
+/var/www/html/ncgap/includes/nc_config.php  --edit grass settings, connection settings, temp space settings
+
+Go to http://www.fpdf.org/ and download v1.53. and untar. Copy the file fpdf.php and directory font to /var/www/html/ncgap/includes.
+
+http://ftp.gnu.org/gnu/freefont/ -- get freefont-ttf-20090104.tar.gz, install and create fontset file in ncgap dir
+
+mkdir /pub/richness_export --chmod 777
+createuser -P -e ancalagon;  --to connect from ancalagon 
+host    all     ancalagon       192.168.1.3/32  password  --add to pg_hba.conf 
+listen_addresses = '*'   --- edit postgresql.conf
+grant select, update on data_dnld to ancalagon;  --sql command logged in to database
+grant select on aoi to tango; grant select on geometry_columns to tango; grant select on spatial_ref_sys to tango;
+update start_py script on ancalagon remote computer
+
+ssh-keygen -- create key
+copy .ssh/id_dsa.pub from manhattah@ancalagon and root@ancalagon to manhattan@tango for rsync connect
+cat id_dsa.pub >> .ssh/authorized_keys --add to tango for both users, but might not need both
+chmod 700 authorized_keys  --change permissions of file
+
+##########################################################################################
+########  create cron jobs for database backup and archive
+####################################################################################
+
+
+
+---cron hourly cleanup script
+#!/bin/bash
+find /pub/server_temp -cmin +20 -execdir rm  '{}' ';' 2>/dev/null
+
+--cron daily cleanup script
+#!/bin/bash
+{
+rm -rf /pub/server_temp/*
+rm -rf /pub/richness_export/*
+
+export GISBASE=/usr/local/grass-6.4.0svn
+export PATH=/usr/local/grass-6.4.0svn/bin:/usr/local/grass-6.4.0svn/scripts:/usr/local/bin:/usr/bin:/bin
+export GISRC=/var/www/html/ncgap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/swgap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/segap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+
+export GISRC=/var/www/html/prgap/grassrc
+
+su -p webserv -c  "g.mremove -f rast=*"
+su -p webserv -c  "g.mremove -f rast=*"
+}  >> /dev/null 2>&1
+
+############################################################################
+#########   after complete install of web site turn selinux back on
+####################################################################
+
+/sbin/restorecon -v /usr/sbin/httpd
+/sbin/service httpd restart
+
+mkdir /pub/httpd_tmp  --set to /var/httpd_tmp on metacomet
+/usr/sbin/semanage fcontext -a -t httpd_sys_script_rw_t  "/pub/httpd_tmp(/.*)?"
+/sbin/restorecon -R -v /pub/httpd_tmp
+
+/usr/sbin/semanage fcontext -a -t var_t "/pub(/.*)?" --also for /data
+/sbin/restorecon -R -v /pub/
+
+session.save_path = "/pub/httpd_tmp"  --edit php.ini
+
+mkdir /var/run/postgresql, chmod 777
+export PGHOST=/var/run/postgresql -- add to .bashrc in postgres
+chcon -t postgresql_var_run_t /var/run/postgresql
+unix_socket_directory = '/var/run/postgresql'  --edit postgresql.conf
+
+/usr/sbin/setsebool -P httpd_can_network_connect 1
+
+/usr/sbin/semanage fcontext -a -t bin_t "/usr/local/grass-6.4.0svn/lib(/.*)?"
+/sbin/restorecon -R -v /usr/local/grass-6.4.0svn/lib/  ---requires httpd restart
+
+/usr/sbin/semanage fcontext -a -t httpd_sys_script_rw_t  "/pub/weblogs(/.*)?"
+/sbin/restorecon -R -v /pub/weblogs
+
+
+/usr/sbin/semanage fcontext -a -t httpd_sys_script_rw_t  "/pub/server_temp(/.*)?"
+/sbin/restorecon -R -v /pub/server_temp
+
+-----/usr/sbin/semanage fcontext -a -t httpd_unconfined_script_exec_t "/usr/local/grass-6.4.0svn/bin(/.*)?"----
+-----this did not go, perhaps done in wrong order, instead use this
+chcon -t httpd_unconfined_script_exec_t /usr/local/grass-6.4.0svn/bin/*
+
+/usr/sbin/semanage fcontext -a -t httpd_sys_script_rw_t  "/pub/grass(/.*)?"
+/sbin/restorecon -R -v /pub/grass
+
+
+
+
+
+
+
+
+

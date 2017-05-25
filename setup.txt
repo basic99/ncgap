@@ -1,0 +1,85 @@
+Instructions in this file were used to set up the ncgap web site on a new Debian Etch 32-bit server, user name is assumed to be grassmonkey with an /etc/sudoers file configured to run make and ldconfig. The downloads used are the latest at this time.
+
+First, create a /var/www/html directory and change the owner of the /html directory to grassmonkey. cd to the html directory and run (this for remote checkout): 
+
+cvs -d :ext:grassmonkey@192.168.1.18:/var/lib/cvs/sandbox co ncgap
+
+This file is then available as /var/www/html/ncgap/setup.txt. You have also checked out the source code for the site. Then continue to install and configure software, similar to and derived from Doug N's instructions.
+
+Go to  http://proj.maptools.org/ and get proj-4.5.0.tar.gz and proj-datumgrid-1.3.zip and unzip proj-4.5.0.tar.gz in /usr/local,then move proj-datumgrid-1.3.zip to /usr/local/proj-4.5.0/nad and unzip. Then run ./configure, make, sudo make install.
+
+Create file /etc/ld.so.conf.d/locallib.conf and add line /usr/local/lib. Run sudo /sbin/ldconfig -v.
+
+Get geos-3.0.0rc4.tar.bz2 from http://geos.refractions.net/. Move to /usr/local, untar, and run ./configure, make, sudo make install, sudo /sbin/ldconfig -v.
+
+Get postgresql-8.2.5.tar.bz2 from http://www.postgresql.org, and move to /usr/local and untar.Run LDFLAGS=-lstdc++ ./configure, make, sudo make install. Use synaptic to add packages needed by configure. I added gawk, flex, bison, libreadline5-dev, and zlib1g-dev. Add /usr/local/pgsql/lib to your the locallib, and run sudo /sbin/ldconfig -v. Run adduser postgres, and add export PATH=/usr/local/pgsql/bin:$PATH to the end of /home/postgres/.bashrc. 
+
+cd to /var/lib as root and create directory pgsql, and then run chown postgres pgsql, and chmod 700 pgsql- su to postgres and run initdb -D /var/lib/pgsql. Copy /usr/local/postgresql-8.2.5/contrib/start-scripts/linux to /etc/init.d/postgresql and edit data directory line to PGDATA="/var/lib/pgsql" cd to /etc/rc2.d and run ln -s ../init.d/postgresql S75pgsql. Start database either with the init.d script or rebooting. su to postgres and run:
+createdb ncgap
+
+Download postgis-1.3.2.tar.gz, move it to /usr/local and untar. Run ./configure --with-pgsql=/usr/local/pgsql/bin/pg_config, make, sudo make install. su to postgres and run createlang plpgsql ncgap, psql -d ncgap -f lwpostgis.sql, psql -d ncgap -f spatial_ref_sys.sql.
+Finally, you need a dump of the ncgap database to run this:  psql ncgap < ncgap_12_03_2007.
+
+Next install GDAL without GRASS support and return after GRASS is installed and add it in. Download 
+gdal-1.4.4.tar.gz, move to /usr/local, untar and run ./configure --with-libz --with-png --with-libtiff=internal --with-geotiff=internal --with-jpeg=internal --with-pg=/usr/local/pgsql/bin/pg_config --with-geos=yes , make, sudo make install, sudo /sbin/ldconfig -v.
+
+Download grass-6.2.3.tar.gz, move to /usr/local, and untar, and mv grass-6.2.3 grass-6.2.3-src. cd to grass-6.2.3-src and run  CFLAGS="-g -Wall" ./configure --with-tcltk-includes=/usr/include/tcl8.4 --with-postgres-includes=/usr/local/pgsql/include --with-postgres-libs=/usr/local/pgsql/lib --with-opengl=no. Check documentation for compiling for 64-bit server. Use synaptic to add libjpeg62-dev, libtiff4-dev, libpng12-dev, tcl-8.4, tcl-8.4-dev, tk8.4, tk8.4-dev, fftw3, and fftw3-dev to get configure to complete. Run make, sudo make install, then add /usr/local/grass-6.2.3/lib to /etc/ld.so.conf.d/locallib.conf and run sudo /sbin/ldconfig -v.
+
+cd to /usr/local/gdal-1.4.4 and run ./configure --with-libz --with-png --with-libtiff=internal --with-geotiff=internal --with-jpeg=internal --with-pg=/usr/local/pgsql/bin/pg_config --with-geos=yes --with-grass=/usr/local/grass-6.2.3, make , sudo make install, sudo /sbin/ldconfig -v to add GRASS support to GDAL.
+
+Create a /data partition larger than the GRASS data and download the n_carolina directory. The website temp directory is also in /data so create another directory /data/server_temp and make it writable by all. Also create the directory /var/www/cgi-bin
+
+Download httpd-2.2.6.tar.gz from http://httpd.apache.org/. Move to /usr/local, untar, and run ./configure --with-included-apr, make, sudo make install. As root run adduser webserv. If desired can add mod_speling.
+
+There are a number of changes to the configuration file /usr/local/apache2/conf/httpd.conf. 
+1) Change  User daemon to User webserv. 
+2) Change DocumentRoot "/usr/local/apache2/htdocs" to DocumentRoot "/var/www/html"
+3) Add the line Alias /server_temp/  /data/server_temp/
+4) Change <Directory "/usr/local/apache2/htdocs"> to <Directory "/var/www/html">
+5) add  this block
+   <Directory "/data/server_temp">
+   Options  FollowSymLinks
+   AllowOverride None
+   Order allow,deny
+   Allow from all
+   </Directory>
+6) change  ScriptAlias /cgi-bin/ "/usr/local/apache2/cgi-bin/" to ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
+7) change <Directory "/usr/local/apache2/cgi-bin"> to <Directory "/var/www/cgi-bin"> 
+8) add the lines
+    AddHandler php-script .php
+    Action php-script /cgi-bin/php-cgi
+9) change  DirectoryIndex index.html to  DirectoryIndex index.html index.php
+10) add 2 lines:
+  KeepAliveTimeout 1200
+  TimeOut  1200
+
+The longer GRASS calculations can cause timeout problems. This should allow them to run for 20 minutes. Also, some timeout problem can be fixed by changing firewall settings. Another parameter useful to set is in php.ini max_execution_time = 120 helped timeout problems on the script creating pdf files.
+
+
+Copy /usr/local/apache2/bin/apachectl to /etc/init.d, and in /etc/rc2.d and run ln -s ../init.d/apachectl S76httpd.
+
+Download PHP 5.2.5 (tar.gz), move to /usr/local, untar, and run ./configure --with-regex=system --with-pgsql=/usr/local/pgsql/bin/pg_config. Add libxml2-dev if needed for configure, then make, sudo make install, sudo /sbin/ldconfig -v. cd to /usr/local/php-5.2.5/sapi/cgi and run cp php-cgi /var/www/cgi-bin/. At this point the code <?php phpinfo(); ?> put into a file with a .php extension should run phpinfo in the web browser. Get this to work before proceeding.
+
+Download  mapserver-5.0.0.tar.gz, move to /usr/local, untar, and cd to mapserver-5.0.0. Run ./configure --with-threads --with-proj --with-php=/usr/local/php-5.2.5 --with-gd --with-freetype --with-ogr --with-gdal --with-wmsclient --with-postgis=/usr/local/pgsql/bin/pg_config --without-eppl --with-wfs --with-wfsclient. To get configure to complete use synaptic to add libgd2-xpm, libgd2-xpm-dev, libcurl3-dev. Then run make and as root cp mapserv /var/www/cgi-bin.
+
+Now configure PHP to run mapscript. First, run cp /usr/local/php-5.2.5/php.ini-dist /usr/local/lib/php.ini. Create the directory /usr/local/lib/php/extensions. Edit php.ini and replace the line extension_dir = "./" with the following:
+  extension_dir = "/usr/local/lib/php/extensions"
+  extension = "php_mapscript.so"
+cd to /usr/local/mapserver-5.0.0/mapscript/php3 and run cp php_mapscript.so /usr/local/lib/php/extensions. Restart apache and run the phpinfo script and you need to see the MapScript section. 
+
+We have already installed the database ncgap and the GRASS data n_carolina and the code base with cvs. Since cvs works best for text based files we need to get the graphics and data and the html in document root (login page) that is not in the ncgap cvs with ftp. Create the directories /var/www/html/data/ncgap and /var/www/html/graphics/ncgap and /var/www/html/graphics/logos. From /var/www/html/data/ncgap ftp nc_ref.png, nc_blank_b, NC_Hillshade.gtiff, and nc_lcov_256.gtiff. Get all the buttons and legends in /var/www/html/graphics/ncgap and /var/www/html/graphics/logos, and get index.html and OG_Home.php in document root.
+
+Install ttf-freefont with synaptic.There is a fontset.txt file in /var/www/html/ncgap you can get with ftp that should work. 
+
+Delete the directory /data/n_carolina/webserv. Log out of grassmonkey, and log into webserv, start GRASS and create a mapset named webserv. Logout out and back into grassmonkey and run cp /home/webserv/.grassrc6 /var/www/html/ncgap/grassrc. Open /var/www/html/ncgap/includes/nc_config-sample.php. This file has some configuration parameters that can be changed, some are correct for this installation, but change the lines - $GISBASE = "/usr/local/grass-6.2.3"; and $PATH = "/usr/local/grass-6.2.3/bin:/usr/local/grass-6.2.3/scripts:/usr/local/bin:/usr/bin:/bin";. Save the file in the same directory and name it nc_config.php. Edit /usr/local/lib/php.ini  and change ;include_path = ".:/php/includes" to include_path = "/var/www/html/ncgap/includes"
+
+Go to http://www.fpdf.org/ and download v1.53. and untar. Copy the file fpdf.php and directory font to /var/www/html/ncgap/includes.
+
+
+
+
+
+
+
+
+
