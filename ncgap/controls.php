@@ -2,24 +2,24 @@
 require('nc_config.php');
 pg_connect($pg_connect);
 
-require_once 'Zend/Loader.php';
-Zend_Loader::loadClass('Zend_Cache');
-try{
-   $frontendOptions = array(
-      'lifetime' => 604800, // cache lifetime forever
-      'automatic_serialization' => true
-   );
-   $backendOptions = array(
-       'cache_dir' => '../../temp/' // Directory where to put the cache files
-   );
-   // getting a Zend_Cache_Core object
-   $cache = Zend_Cache::factory('Output',
-                                'File',
-                                $frontendOptions,
-                                $backendOptions);
-} catch(Exception $e) {
-  echo $e->getMessage();
-}
+// require_once 'Zend/Loader.php';
+// Zend_Loader::loadClass('Zend_Cache');
+// try{
+//    $frontendOptions = array(
+//       'lifetime' => 604800, // cache lifetime forever
+//       'automatic_serialization' => true
+//    );
+//    $backendOptions = array(
+//        'cache_dir' => '../../temp/' // Directory where to put the cache files
+//    );
+//    // getting a Zend_Cache_Core object
+//    $cache = Zend_Cache::factory('Output',
+//                                 'File',
+//                                 $frontendOptions,
+//                                 $backendOptions);
+// } catch(Exception $e) {
+//   // echo $e->getMessage();
+// }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
