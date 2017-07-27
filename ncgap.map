@@ -8,7 +8,7 @@ MAP
   #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
   CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
   #CONFIG  "MS_ERRORFILE" "stderr"
-  #DEBUG 5
+  DEBUG 5
   CONFIG PROJ_LIB "/usr/local/share/proj/"
 
   #WEB
