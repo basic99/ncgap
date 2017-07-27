@@ -2,6 +2,12 @@
 require('nc_config.php');
 pg_connect($pg_connect);
 
+ini_set("log_errors", 1);
+ini_set("display_errors", 0);
+ini_set("error_log", "/var/www/html/ncgap/logs/php-error.log");
+
+error_log("hello world");
+
 // require_once 'Zend/Loader.php';
 // Zend_Loader::loadClass('Zend_Cache');
 // try{
