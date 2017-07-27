@@ -36,3 +36,6 @@ https://github.com/phpbrew/phpbrew/issues/152
 rsync -avz JimW@metacomet.zo.ncsu.edu:/var/www/html/nc_sppreport . -- other dirs
 
 rsync  -avz JimW@metacomet.zo.ncsu.edu:/var/www/library -- for Zend library
+
+mkdir /var/log/weblog
+chmod /var/log/weblog
