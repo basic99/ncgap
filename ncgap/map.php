@@ -13,12 +13,12 @@
  * @package ncgap
  */
 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['username'])){
-	$_SESSION['username'] = "visitor";
-}
-$user_name = $_SESSION['username'];
+// if(!isset($_SESSION['username'])){
+// 	$_SESSION['username'] = "visitor";
+// }
+// $user_name = $_SESSION['username'];
 
 ini_set("log_errors", 1);
 ini_set("display_errors", 0);
