@@ -39,3 +39,5 @@ rsync  -avz JimW@metacomet.zo.ncsu.edu:/var/www/library -- for Zend library
 
 mkdir /var/log/weblog
 chmod /var/log/weblog
+
+http://mapserver.org/optimization/debugging.html

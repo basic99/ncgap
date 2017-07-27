@@ -57,23 +57,23 @@ MAP
   #  END
   #END
 
-  SCALEBAR
-    IMAGECOLOR 255 255 255
-    LABEL
-        TYPE truetype
-        FONT  "Sans"
-        SIZE  10
-        OUTLINECOLOR  255 255 255
-        COLOR 0 0 0
-    END
-    STYLE 1
-    SIZE 100 2
-    COLOR 0 0 0
-    UNITS kilometers
-    INTERVALS 1
-    TRANSPARENT FALSE
-    STATUS EMBED
-  END
+  #SCALEBAR
+  #  IMAGECOLOR 255 255 255
+  #  LABEL
+   #     TYPE truetype
+    #    FONT  "Sans"
+    #    SIZE  10
+    #    OUTLINECOLOR  255 255 255
+    #    COLOR 0 0 0
+   # END
+  #  STYLE 1
+  #  SIZE 100 2
+  #  COLOR 0 0 0
+   # UNITS kilometers
+  #  INTERVALS 1
+  #  TRANSPARENT FALSE
+ #   STATUS EMBED
+ # END
 
   SYMBOL
     NAME 'hatch-lines'
