@@ -7,6 +7,12 @@
 require('nc_config.php');
 pg_connect($pg_connect);
 
+ini_set("log_errors", 1);
+ini_set("display_errors", 0);
+ini_set("error_log", "/var/www/html/ncgap/logs/php-error.log");
+
+error_log("running map_ajax.php");
+
 //set mapfile and load mapscript if not already loaded
 $mapfile = "../ncgap.map";
 
