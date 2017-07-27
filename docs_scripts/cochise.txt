@@ -1,0 +1,38 @@
+adduser postgres
+yum install postgresql-server
+yum install postgresql-devel
+service postgresql initdb
+
+wget http://download.osgeo.org/geos/geos-3.3.9.tar.bz2 and install
+
+vi locallib.conf
+/sbin/ldconfig -v
+
+install from source proj-4.9.3.tar.gz
+
+wget http://download.osgeo.org/gdal/gdal-1.7.3.tar.gz
+
+yum install libxml2 libxml2-devel
+postgis-1.5.8
+./configure
+make
+make install
+
+createdb ncgap
+pg_restore -d ncgap ncgap_05_21_2017.dump
+
+https://grass.osgeo.org/grass64/source/grass-6.4.6.tar.gz
+
+reinstall gdal
+./configure --with-grass=/usr/local/grass-6.4.6 --with-png=internal
+
+http://osgeo-org.1560.x6.nabble.com/AGG-Compile-error-with-PHP-Mapscript-td4251176.html
+https://github.com/phpbrew/phpbrew/issues/152
+./configure --with-proj --with-agg=/usr/local/agg-2.5 --with-freetype \
+--with-ogr --with-gdal --with-wmsclient --with-postgis=/usr/bin/pg_config --without-eppl \
+--with-wfs --with-wfsclient --enable-debug --with-php=/usr/local/php-5.3.3
+
+
+rsync -avz JimW@metacomet.zo.ncsu.edu:/var/www/html/nc_sppreport . -- other dirs
+
+rsync  -avz JimW@metacomet.zo.ncsu.edu:/var/www/library -- for Zend library
