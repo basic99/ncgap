@@ -1,0 +1,133 @@
+MAP
+  IMAGETYPE	AGGA
+  EXTENT		 124005  4845  935385 318165
+  SIZE		700 500
+  IMAGECOLOR	255 255 255
+  #FONTSET '/var/www/html/ncgap/myfonts.txt'
+   #FONTSET '/var/www/html/ncgap/fontset.txt'
+  #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
+  CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
+  #CONFIG  "MS_ERRORFILE" "stderr"
+  DEBUG 5
+  CONFIG PROJ_LIB "/usr/local/share/proj/"
+
+  #WEB
+  #	 IMAGEPATH   '/pub/server_temp/'
+  #	 IMAGEURL  '/server_temp/'
+  #END
+
+ # PROJECTION
+ #   "init=epsg:32119"
+ # END
+
+
+  OUTPUTFORMAT
+    NAME 'AGGA'
+    DRIVER AGG/PNG
+    IMAGEMODE RGB
+    FORMATOPTION "INTERLACE=OFF"
+  END
+
+  OUTPUTFORMAT
+    NAME mypng
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE rgba
+    EXTENSION "png"
+    TRANSPARENT ON
+   END
+
+   OUTPUTFORMAT
+    NAME pdfpng
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE rgb
+    EXTENSION "png"
+    FORMATOPTION "INTERLACE=OFF"
+   END
+
+  #LEGEND
+  #  STATUS ON
+  #  KEYSIZE 40 20
+  #  KEYSPACING 5 5
+  #  LABEL
+  #    TYPE truetype
+  #    FONT 'Sans'
+  #    SIZE 32
+  #  END
+  #END
+
+  SCALEBAR
+    IMAGECOLOR 255 255 255
+    LABEL
+        TYPE truetype
+        FONT  "Sans"
+        SIZE  10
+        OUTLINECOLOR  255 255 255
+        COLOR 0 0 0
+    END
+    STYLE 1
+    SIZE 100 2
+    COLOR 0 0 0
+    UNITS kilometers
+    INTERVALS 1
+    TRANSPARENT FALSE
+    STATUS EMBED
+  END
+
+  SYMBOL
+    NAME 'hatch-lines'
+    TYPE HATCH
+  END
+
+  SYMBOL
+    NAME 'hatch-pattern'
+    TYPE  vector
+    POINTS
+      5 5
+      6 5
+      6 6
+      5 6
+      5 5
+      -1 -1
+      15 15
+      16 15
+      16 16
+      15 16
+      15 15
+    END
+  END
+
+  REFERENCE
+    IMAGE   '/var/www/html/data/ncgap/nc_ref.png'
+    SIZE  150 102
+    EXTENT 83682.9 -146859 970717 475621
+    STATUS ON
+    COLOR -1 -1 -1
+  END
+
+
+
+  #############################################################################################################
+  ###BACKGROUND RASTER LAYERS
+  LAYER
+    NAME      landcover
+    DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
+    STATUS    off
+    TYPE      RASTER
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    NAME    elevation
+    DATA    "/var/www/html/data/ncgap/NC_Hillshade.gtiff"
+    STATUS   off
+    TYPE     raster
+  END
+
+
+
+
+
+
+END

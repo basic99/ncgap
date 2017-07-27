@@ -3,7 +3,7 @@ MAP
   EXTENT		 124005  4845  935385 318165
   SIZE		700 500
   IMAGECOLOR	255 255 255
-  FONTSET '/var/www/html/ncgap/myfonts.txt'
+  #FONTSET '/var/www/html/ncgap/myfonts.txt'
    #FONTSET '/var/www/html/ncgap/fontset.txt'
   #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
   CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
