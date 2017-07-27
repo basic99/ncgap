@@ -19,7 +19,8 @@ if(!isset($_SESSION['username'])){
 	$_SESSION['username'] = "visitor";
 }
 $user_name = $_SESSION['username'];
-php ini_set("log_errors", 1);
+
+ini_set("log_errors", 1);
 ini_set("display_errors", 0);
 ini_set("error_log", "/var/www/html/ncgap/logs/php-error.log");
 
