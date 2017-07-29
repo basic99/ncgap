@@ -1,5 +1,5 @@
 MAP
-  IMAGETYPE	AGGA
+  IMAGETYPE	mypng
   EXTENT		 124005  4845  935385 318165
   SIZE		700 500
   IMAGECOLOR	255 255 255
@@ -21,12 +21,7 @@ MAP
  # END
 
 
-  OUTPUTFORMAT
-    NAME 'AGGA'
-    DRIVER AGG/PNG
-    IMAGEMODE RGB
-    FORMATOPTION "INTERLACE=OFF"
-  END
+
 
   OUTPUTFORMAT
     NAME mypng
@@ -57,54 +52,8 @@ MAP
   #  END
   #END
 
-  SCALEBAR
-    IMAGECOLOR 255 255 255
-    LABEL
-        TYPE truetype
-        FONT  "Sans"
-        SIZE  10
-        OUTLINECOLOR  255 255 255
-        COLOR 0 0 0
-    END
-    STYLE 1
-    SIZE 100 2
-    COLOR 0 0 0
-    UNITS kilometers
-    INTERVALS 1
-    TRANSPARENT FALSE
-    STATUS EMBED
-  END
 
-  SYMBOL
-    NAME 'hatch-lines'
-    TYPE HATCH
-  END
 
-  SYMBOL
-    NAME 'hatch-pattern'
-    TYPE  vector
-    POINTS
-      5 5
-      6 5
-      6 6
-      5 6
-      5 5
-      -1 -1
-      15 15
-      16 15
-      16 16
-      15 16
-      15 15
-    END
-  END
-
-  REFERENCE
-    IMAGE   '/var/www/html/data/ncgap/nc_ref.png'
-    SIZE  150 102
-    EXTENT 83682.9 -146859 970717 475621
-    STATUS ON
-    COLOR -1 -1 -1
-  END
 
 
 
@@ -113,7 +62,7 @@ MAP
   LAYER
     NAME      landcover
     DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
-    STATUS    off
+    STATUS    on
     TYPE      RASTER
     TEMPLATE "dummy.html"
   END
