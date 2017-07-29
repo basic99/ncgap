@@ -1,13 +1,15 @@
 NAME "Europe in purple"
 SIZE 400 400
 STATUS ON
-#SYMBOLSET "/var/www/html/maps/symbols/symbols.sym"
-EXTENT -5696501 1923039 5696501 11022882
+#SYMBOLSET "/var/www/html/ncgap/symbols/symbols.sym"
+#EXTENT -5696501 1923039 5696501 11022882
+EXTENT -9406496, 4001978, -8382357, 4397372
+
 UNITS METERS
-SHAPEPATH "/var/www/html/maps/data"
+SHAPEPATH "/var/www/html/ncgap/data"
 
 WEB
-    IMAGEPATH "/var/www/html/maps/tmp/"
+    IMAGEPATH "/var/www/html/mcgap/tmp/"
     IMAGEURL "/tmp/"
 END
 
@@ -15,7 +17,7 @@ LAYER
     NAME "Europe"
     TYPE POLYGON
     STATUS ON
-    DATA "europe"
+    DATA "cnty3_simple"
     CLASS
         STYLE
             COLOR 110 50 100
