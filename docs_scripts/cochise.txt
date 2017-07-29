@@ -43,3 +43,8 @@ chmod /var/log/weblog
 http://mapserver.org/optimization/debugging.html
 
 rsync -avz JimW@metacomet.zo.ncsu.edu:/usr/local/freefont-20090104 .
+
+mapscript/php3/php_mapscript.c
+#define ZEND_DEBUG 0
+to
+#define ZEND_DEBUG 1

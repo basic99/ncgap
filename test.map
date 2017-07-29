@@ -7,7 +7,7 @@ MAP
    #FONTSET '/var/www/html/ncgap/fontset.txt'
   #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
   CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
-  #CONFIG  "MS_ERRORFILE" "stderr"
+  CONFIG  "MS_ERRORFILE" "stderr"
   DEBUG 5
   CONFIG PROJ_LIB "/usr/local/share/proj/"
 
