@@ -48,3 +48,7 @@ mapscript/php3/php_mapscript.c
 #define ZEND_DEBUG 0
 to
 #define ZEND_DEBUG 1
+make
+cp  mapscript/php3/php_mapscript.so  /usr/local/lib/php/extensions
+
+http://mapserver.org/installation/php.html
