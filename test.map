@@ -2,7 +2,7 @@ MAP
     NAME "Europe in purple"
     SIZE 400 400
     STATUS ON
-    #SYMBOLSET "/var/www/html/ncgap/symbols/symbols.sym"
+    SYMBOLSET "/var/www/html/ncgap/symbols/symbols.sym"
     #EXTENT -5696501 1923039 5696501 11022882
     EXTENT -9406496, 4001978, -8382357, 4397372
 
