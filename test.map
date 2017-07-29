@@ -23,59 +23,5 @@ MAP
 
 
 
-  OUTPUTFORMAT
-    NAME mypng
-    DRIVER "GD/PNG"
-    MIMETYPE "image/png"
-    IMAGEMODE rgba
-    EXTENSION "png"
-    TRANSPARENT ON
-   END
-
-   OUTPUTFORMAT
-    NAME pdfpng
-    DRIVER "GD/PNG"
-    MIMETYPE "image/png"
-    IMAGEMODE rgb
-    EXTENSION "png"
-    FORMATOPTION "INTERLACE=OFF"
-   END
-
-  #LEGEND
-  #  STATUS ON
-  #  KEYSIZE 40 20
-  #  KEYSPACING 5 5
-  #  LABEL
-  #    TYPE truetype
-  #    FONT 'Sans'
-  #    SIZE 32
-  #  END
-  #END
-
-
-
-
-
-
-  #############################################################################################################
-  ###BACKGROUND RASTER LAYERS
-  LAYER
-    NAME      landcover
-    DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
-    STATUS    on
-    TYPE      RASTER
-  END
-
-  LAYER
-    NAME    elevation
-    DATA    "/var/www/html/data/ncgap/NC_Hillshade.gtiff"
-    STATUS   off
-    TYPE     raster
-  END
-
-
-
-
-
 
 END
