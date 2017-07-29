@@ -64,7 +64,6 @@ MAP
     DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
     STATUS    on
     TYPE      RASTER
-    TEMPLATE "dummy.html"
   END
 
   LAYER
