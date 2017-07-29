@@ -1,27 +1,28 @@
-MAP
-  #IMAGETYPE	mypng
-  EXTENT		 124005  4845  935385 318165
-  SIZE		700 500
-  IMAGECOLOR	255 255 255
-  FONTSET '/var/www/html/ncgap/myfonts.txt'
-   #FONTSET '/var/www/html/ncgap/fontset.txt'
-  #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
-  CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
-  CONFIG  "MS_ERRORFILE" "stderr"
-  DEBUG 5
-  CONFIG PROJ_LIB "/usr/local/share/proj/"
+NAME "Europe in purple"
+SIZE 400 400
+STATUS ON
+#SYMBOLSET "/var/www/html/maps/symbols/symbols.sym"
+EXTENT -5696501 1923039 5696501 11022882
+UNITS METERS
+SHAPEPATH "/var/www/html/maps/data"
 
-  #WEB
-  #	 IMAGEPATH   '/pub/server_temp/'
-  #	 IMAGEURL  '/server_temp/'
-  #END
+WEB
+    IMAGEPATH "/var/www/html/maps/tmp/"
+    IMAGEURL "/tmp/"
+END
 
- # PROJECTION
- #   "init=epsg:32119"
- # END
-
-
-
-
+LAYER
+    NAME "Europe"
+    TYPE POLYGON
+    STATUS ON
+    DATA "europe"
+    CLASS
+        STYLE
+            COLOR 110 50 100
+            OUTLINECOLOR 200 200 200
+            SYMBOL 0
+        END
+    END
+END
 
 END
