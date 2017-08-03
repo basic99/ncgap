@@ -1,5 +1,11 @@
 <?php
 
+ini_set("log_errors", 1);
+ini_set("display_errors", 0);
+ini_set("error_log", "/var/www/html/ncgap/logs/php-error.log");
+
+error_log("running map_ajax.php");
+
   // Create a unique image name every time through
 
   $image_name = sprintf("phpms-hello%0.6d",rand(0,999999)).".png";
