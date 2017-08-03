@@ -382,6 +382,244 @@ MAP
     TEMPLATE "dummy.html"
   END
 
+     ###################################################################################
+  ### ownership layer
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "gapown"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_owner"
+    STATUS off
+    TYPE POLYGON
+    CLASSITEM "ownc"
+    TRANSPARENCY alpha
+   ## debug 3
+    CLASS
+      NAME "Other Federal"
+      EXPRESSION "1000"
+      STYLE
+        OUTLINECOLOR 0 136 255
+        WIDTH 1
+      END
+      STYLE
+        SYMBOL 'hatch-lines'
+        COLOR 0 136 255
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "US Fish and Wildlife Service"
+      EXPRESSION "1300"
+      STYLE
+        OUTLINECOLOR 163 96 43
+        WIDTH 1
+      END
+      STYLE
+        SYMBOL 'hatch-lines'
+        COLOR  163 96 43
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "US Forest Service"
+      EXPRESSION "1400"
+      STYLE
+        OUTLINECOLOR 170 254 160
+        WIDTH 1
+      END
+      STYLE
+        SYMBOL 'hatch-lines'
+        COLOR    170 254 160
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Department of Defense or Department of Energy"
+      EXPRESSION "1500"
+      STYLE
+        OUTLINECOLOR 120 120 120
+        WIDTH 1
+      END
+      STYLE
+        SYMBOL 'hatch-lines'
+        COLOR    120 120 120
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+          NAME "National Park Service"
+          EXPRESSION "1600"
+          STYLE
+            OUTLINECOLOR 65 104 0
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 65 104 0
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "Other State Government Land"
+          EXPRESSION "3000"
+          STYLE
+            OUTLINECOLOR 254 0 0
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   254 0 0
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State Parks & Recreation Department"
+          EXPRESSION "3100"
+          STYLE
+            OUTLINECOLOR 1 219 0
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 1 219 0
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State University"
+          EXPRESSION "3200"
+          STYLE
+            OUTLINECOLOR 89 130 90
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 89 130 90
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State Wildlife Resources Commission"
+          EXPRESSION "3300"
+          STYLE
+            OUTLINECOLOR 145 143 6
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  145 143 6
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State Forestry Department"
+          EXPRESSION "3400"
+          STYLE
+            OUTLINECOLOR 170 35 50
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  170 35 50
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State Agriculture Department"
+          EXPRESSION "3500"
+          STYLE
+            OUTLINECOLOR 177  225 17
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  177  225 17
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "State Coastal Management Department"
+          EXPRESSION "3600"
+          STYLE
+            OUTLINECOLOR 0 223 243
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  0 223 243
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "Regional Government"
+          EXPRESSION "4000"
+          STYLE
+            OUTLINECOLOR 183 218 62
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  183 218 62
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "Local Government Land"
+          EXPRESSION "5000"
+          STYLE
+            OUTLINECOLOR 9 40 84
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  9 40 84
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "Non-Governmental Organization"
+          EXPRESSION "6000"
+          STYLE
+            OUTLINECOLOR 255 165 165
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 165 165
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+
 
 
 
