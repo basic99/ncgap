@@ -52,3 +52,11 @@ make
 cp  mapscript/php3/php_mapscript.so  /usr/local/lib/php/extensions
 
 http://mapserver.org/installation/php.html
+
+</FilesMatch>
+Alias /server_temp/  /pub/server_temp/
+<Directory "/pub/server_temp">
+    Options Indexes FollowSymLinks
+    Require all granted
+    Allow from all
+</Directory>
