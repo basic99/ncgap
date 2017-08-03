@@ -970,65 +970,7 @@ MAP
     END
     TEMPLATE "dummy.html"
   END
- ###########################################################################################################
-  ## status layer
-  LAYER
-    CONNECTIONTYPE postgis
-    NAME "gapsta"
-    CONNECTION "user=postgres  dbname=ncgap host=localhost"
-    DATA "wkb_geometry FROM nc_status"
-    STATUS off
-    TYPE POLYGON
-    CLASSITEM "stac"
-    TRANSPARENCY alpha
-    CLASS
-      NAME "1-Permanent (encouraged natural processes)"
-      EXPRESSION "1"
-          STYLE
-        OUTLINECOLOR 3 38 92
-        WIDTH 1
-      END
-      STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  3 38 92
-        ANGLE 60
-        SIZE 10
-        WIDTH 1
-      END
-    END
-    CLASS
-      NAME "2-Permanent (suppressed natural processes)"
-      EXPRESSION "2"
-          STYLE
-        OUTLINECOLOR 47 92 149
-        WIDTH 1
-      END
-      STYLE
-            SYMBOL 'hatch-lines'
-            COLOR     47 92 149
-        ANGLE 60
-        SIZE 10
-        WIDTH 1
-      END
-    END
-    CLASS
-      NAME "3-Permanent (intensive anthropogenic disturbance)"
-      EXPRESSION "3"
-          STYLE
-        OUTLINECOLOR 60 131 237
-        WIDTH 1
-      END
-      STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   60 131 237
-        ANGLE 60
-        SIZE 10
-        WIDTH 1
-      END
-    END
-    TEMPLATE "dummy.html"
 
-  END
 
 
 
