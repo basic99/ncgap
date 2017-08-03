@@ -6,7 +6,7 @@
 
   // Create a new instance of a map object
 
-  $map = ms_newMapObj("/home/www/html/ncgap/test/hello.map");
+  $map = ms_newMapObj("/var/www/html/ncgap/test/hello.map");
 
   // Create an image of the map and save it to disk
 
