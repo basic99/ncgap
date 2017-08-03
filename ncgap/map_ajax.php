@@ -88,13 +88,13 @@ if(preg_match("/ownership/", $layer)){
 	$this_layer = $map->getLayerByName('gapown');
 	$this_layer->set('status', MS_OFF);
 }
-if(preg_match("/status/", $layer)){
-	$this_layer = $map->getLayerByName('gapsta');
-	$this_layer->set('status', MS_ON);
-}else{
-	$this_layer = $map->getLayerByName('gapsta');
-	$this_layer->set('status', MS_OFF);
-}
+// if(preg_match("/status/", $layer)){
+// 	$this_layer = $map->getLayerByName('gapsta');
+// 	$this_layer->set('status', MS_ON);
+// }else{
+// 	$this_layer = $map->getLayerByName('gapsta');
+// 	$this_layer->set('status', MS_OFF);
+// }
 if(preg_match("/landcover/", $layer)){
 	$this_layer = $map->getLayerByName('landcover');
 	$this_layer->set('status', MS_ON);
