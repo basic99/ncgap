@@ -618,6 +618,38 @@ MAP
             WIDTH 1
           END
     END
+        #####################################################################
+        ##this class needs to have correct legend color
+    CLASS
+          NAME "Private - Managed for Biodiversity"
+          EXPRESSION "7000"
+          STYLE
+            OUTLINECOLOR 0 0 0
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  0 0 0
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
+    CLASS
+          NAME "Private - Conservation Easement"
+          EXPRESSION "7100"
+          STYLE
+            OUTLINECOLOR 0 129 131
+            WIDTH 1
+          END
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  0 129 131
+            ANGLE 60
+            SIZE 10
+            WIDTH 1
+          END
+    END
 
     TEMPLATE "dummy.html"
 
