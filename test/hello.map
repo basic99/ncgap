@@ -102,6 +102,71 @@ MAP
          debug on
        END
 
+        ########################################################################################################
+  ## range map
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "range"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_range"
+    STATUS OFF
+    TYPE POLYGON
+    CLASSITEM ""
+    CLASS
+      NAME "absent"
+      EXPRESSION "0"
+      STYLE
+        OUTLINECOLOR 120 120 120
+      END
+    END
+    CLASS
+      NAME "possible"
+      EXPRESSION "1"
+      STYLE
+        OUTLINECOLOR 120 120 120
+        COLOR 255 224 165
+      END
+    END
+    CLASS
+      NAME "predicted"
+      EXPRESSION "2"
+          STYLE
+        OUTLINECOLOR 120 120 120
+        COLOR 255 119 0
+      END
+    END
+    CLASS
+      NAME "confirmed"
+      EXPRESSION "3"
+          STYLE
+        OUTLINECOLOR 120 120 120
+        COLOR 139 69 19
+      END
+    END
+    CLASS
+      NAME "excluded"
+      EXPRESSION "4"
+          STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 120 120 120
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+        OUTLINECOLOR 120 120 120
+      END
+    END
+    CLASS
+      NAME "historic"
+      EXPRESSION "5"
+          STYLE
+            SYMBOL 'hatch-pattern'
+            COLOR 120 120 120
+          SIZE 10
+          OUTLINECOLOR 120 120 120
+        END
+      END
+    END
+
 
 
 
