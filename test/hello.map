@@ -2,6 +2,7 @@ MAP
      NAME "Hello World"
      SIZE 400 300
     # IMAGECOLOR 249 245 186
+    FONTSET '/var/www/html/ncgap/myfonts.txt'
      IMAGETYPE png
     # EXTENT -1.0 -1.0 1.0 1.0
       EXTENT         124005  4845  935385 318165
@@ -33,4 +34,22 @@ MAP
          TYPE      RASTER
          TEMPLATE "dummy.html"
        END
+        LAYER
+         NAME    elevation
+         DATA    "/var/www/html/data/ncgap/NC_Hillshade.gtiff"
+         STATUS   off
+         TYPE     raster
+       END
+
+       LAYER
+         NAME    mapcalc
+         DATA    ""
+         STATUS   off
+         TYPE     raster
+         debug on
+       END
+
+
+
+
 END
