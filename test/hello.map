@@ -27,6 +27,32 @@ MAP
                END
           END
      END
+
+       OUTPUTFORMAT
+         NAME 'AGGA'
+         DRIVER AGG/PNG
+         IMAGEMODE RGB
+         FORMATOPTION "INTERLACE=OFF"
+       END
+
+       OUTPUTFORMAT
+         NAME mypng
+         DRIVER "GD/PNG"
+         MIMETYPE "image/png"
+         IMAGEMODE rgba
+         EXTENSION "png"
+         TRANSPARENT ON
+        END
+
+        OUTPUTFORMAT
+         NAME pdfpng
+         DRIVER "GD/PNG"
+         MIMETYPE "image/png"
+         IMAGEMODE rgb
+         EXTENSION "png"
+         FORMATOPTION "INTERLACE=OFF"
+        END
+
      LAYER
          NAME      landcover
          DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
