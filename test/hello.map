@@ -391,7 +391,8 @@ MAP
     DATA "wkb_geometry FROM nc_owner"
     STATUS off
     TYPE POLYGON
-    CLASSITEM "ownc"
+    #CLASSITEM "ownc"
+    CLASSITEM ""
     #TRANSPARENCY alpha
    ## debug 3
     CLASS
