@@ -1,9 +1,10 @@
 MAP
      NAME "Hello World"
      SIZE 400 300
-     IMAGECOLOR 249 245 186
+    # IMAGECOLOR 249 245 186
      IMAGETYPE png
-     EXTENT -1.0 -1.0 1.0 1.0
+    # EXTENT -1.0 -1.0 1.0 1.0
+      EXTENT         124005  4845  935385 318165
      #WEB
      #     TEMPLATE "/var/www/htdocs/hello.html"
      #     IMAGEPATH "/var/www/htdocs/tmp/"
