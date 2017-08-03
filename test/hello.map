@@ -974,6 +974,204 @@ MAP
   ###########################################################################################################
   ## status layer - not working debug
 
+   ########################################################################################################
+  ## maps to draw selected aoi
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "gapman_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_manage"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "gapown_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_owner"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "basins_river_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM basins_river"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+   LAYER
+    CONNECTIONTYPE postgis
+    NAME "sub_basins_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_sub_basins"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "counties_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM counties"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "bcr_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_bcr"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "ecosys_select"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_aoi"
+    STATUS OFF
+    TYPE POLYGON
+    TRANSPARENCY alpha
+    CLASS
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 255 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+  ###################################################################################################
+  ##map for querying
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "nc_steward"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_steward"
+    STATUS OFF
+    TYPE POLYGON
+    CLASS
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 255 255
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+  #########################################################################################################
+  ## AOI map
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "aoi"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry from aoi"
+    STATUS OFF
+    TYPE POLYGON
+    CLASS
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 0 0 255
+      END
+    END
+    CLASS
+      STYLE
+        WIDTH 1
+        OUTLINECOLOR 255 0 0
+      END
+    END
+  END
+
 
 
 
