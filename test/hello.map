@@ -167,6 +167,221 @@ MAP
       END
     END
 
+     ######################################################################################################3
+  ##Foreground layers
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "nc_aoi"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_aoi"
+    STATUS off
+    TYPE polygon
+    CLASS
+      STYLE
+        OUTLINECOLOR 0 0 255
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "cities"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM cities"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        COLOR 255 128 0
+        OUTLINECOLOR 0 0 0
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "counties"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM counties"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        OUTLINECOLOR 120 120 120
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "hydro_line"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM hydro_line"
+    STATUS off
+    TYPE LINE
+    LABELITEM 'stream_nam'
+    CLASS
+       LABEL
+        TYPE truetype
+        FONT  "Sans"
+        SIZE  10
+        OUTLINECOLOR  255 255 255
+        COLOR 0 0 0
+        MINDISTANCE  100
+        POSITION  lr
+        MINFEATURESIZE auto
+        WRAP ' '
+      END
+      STYLE
+        OUTLINECOLOR 190 232 255
+        WIDTH 1
+      END
+    END
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "hydro_poly"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM hydro_poly"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        COLOR 0 0 255
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "roads"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM roads"
+    STATUS off
+    TYPE LINE
+    LABELITEM 'labels'
+    CLASS
+      LABEL
+        TYPE truetype
+        FONT  "Sans"
+        SIZE  10
+        OUTLINECOLOR  255 255 255
+        COLOR 0 0 0
+        MINDISTANCE  100
+        POSITION  lr
+        MINFEATURESIZE auto
+        WRAP ' '
+      END
+      STYLE
+        WIDTH 1
+        COLOR 255 0 0
+      END
+    END
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "interstate"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM interstate"
+    STATUS off
+    TYPE LINE
+    LABELITEM 'labels'
+    CLASS
+      LABEL
+        TYPE truetype
+        FONT  "SansBold"
+        SIZE  12
+        OUTLINECOLOR  255 255 255
+        COLOR 0 0 0
+        MINDISTANCE  100
+        POSITION  lr
+        MINFEATURESIZE auto
+        WRAP ' '
+      END
+      STYLE
+        COLOR 150 0 0
+        WIDTH 1
+      END
+    END
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "topo_24000"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM topo_24000"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        OUTLINECOLOR 0 255 255
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "subwtsh"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_sub_basins"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        OUTLINECOLOR 73 147 220
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+    LAYER
+    CONNECTIONTYPE postgis
+    NAME "basins_river"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM basins_river"
+    STATUS off
+    TYPE polygon
+    CLASS
+      STYLE
+        OUTLINECOLOR 50 100 150
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "bird_consv"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_bcr"
+    STATUS off
+    TYPE POLYGON
+    CLASS
+      STYLE
+        OUTLINECOLOR 125 38 205
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
 
 
 
