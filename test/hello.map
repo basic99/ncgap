@@ -10,7 +10,7 @@ MAP
       #    IMAGEURL "/tmp/"
      #END
      LAYER
-          STATUS default
+          STATUS off
           TYPE point
           FEATURE
                POINTS  0.00 0.00 END
@@ -25,4 +25,11 @@ MAP
                END
           END
      END
+     LAYER
+         NAME      landcover
+         DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
+         STATUS    on
+         TYPE      RASTER
+         TEMPLATE "dummy.html"
+       END
 END
