@@ -391,12 +391,22 @@ MAP
     DATA "wkb_geometry FROM nc_owner"
     STATUS off
     TYPE POLYGON
-    CLASS
+     CLASS
+      NAME "Other Federal"
+      EXPRESSION "1000"
       STYLE
-        OUTLINECOLOR 125 38 205
+        OUTLINECOLOR 0 136 255
+        WIDTH 1
+      END
+      STYLE
+        SYMBOL 'hatch-lines'
+        COLOR 0 136 255
+        ANGLE 60
+        SIZE 10
         WIDTH 1
       END
     END
+
     TEMPLATE "dummy.html"
 
     END
