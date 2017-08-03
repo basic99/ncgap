@@ -972,24 +972,8 @@ MAP
   END
 
   ###########################################################################################################
-  ## status layer
-  LAYER
-    CONNECTIONTYPE postgis
-    NAME "gapsta"
-    CONNECTION "user=postgres  dbname=ncgap host=localhost"
-    DATA "wkb_geometry FROM nc_status"
-    STATUS off
-    TYPE POLYGON
-    CLASSITEM "stac"
-    TRANSPARENCY alpha
-   CLASS
-      STYLE
-        OUTLINECOLOR 125 38 205
-        WIDTH 1
-      END
-    END
-     TEMPLATE "dummy.html"
-  END
+  ## status layer - not working debug
+
 
 
 
