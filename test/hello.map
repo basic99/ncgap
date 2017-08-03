@@ -655,6 +655,322 @@ MAP
 
     END
 
+     ##########################################################################################################################
+  ##management layer
+  LAYER
+    CONNECTIONTYPE postgis
+    NAME "gapman"
+    CONNECTION "user=postgres  dbname=ncgap host=localhost"
+    DATA "wkb_geometry FROM nc_manage"
+    STATUS off
+    TYPE POLYGON
+    CLASSITEM "manc"
+    TRANSPARENCY alpha
+    CLASS
+      NAME "Other Federal Government Land"
+      EXPRESSION "1000"
+          STYLE
+        OUTLINECOLOR 0 131 255
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR    0 131 255
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "National Wildlife Refuge (USFWS)"
+      EXPRESSION "1301"
+          STYLE
+        OUTLINECOLOR 168 103 49
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 168 103 49
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Wilderness Area (USFWS)"
+      EXPRESSION "1303"
+          STYLE
+        OUTLINECOLOR 186 165 0
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  186 165 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Conservation Easement (USFWS)"
+      EXPRESSION "1304"
+          STYLE
+        OUTLINECOLOR 215 211 26
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  215 211 26
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "US Forest Service"
+      EXPRESSION "1400"
+          STYLE
+        OUTLINECOLOR 163 254 159
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   163 254 159
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Wilderness Area (USFS)"
+      EXPRESSION "1412"
+          STYLE
+        OUTLINECOLOR 72 148 24
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR 72 148 24
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Department of Defense or Department of Energy"
+      EXPRESSION "1500"
+          STYLE
+        OUTLINECOLOR 120 120 120
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   120 120 120
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Army Corps of Engineers (DoD)"
+      EXPRESSION "1550"
+          STYLE
+        OUTLINECOLOR 77 109 98
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   77 109 98
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "National Park Service"
+      EXPRESSION "1600"
+          STYLE
+        OUTLINECOLOR 53 105 5
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  53 105 5
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Other State Government Land"
+      EXPRESSION "3000"
+          STYLE
+        OUTLINECOLOR 254 0 9
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  254 0 9
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "State Park/Lake/Natural/Recreation Area"
+      EXPRESSION "3100"
+          STYLE
+        OUTLINECOLOR 0 224 4
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR    0 224 4
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "State University"
+      EXPRESSION "3200"
+          STYLE
+        OUTLINECOLOR 96 130 95
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   96 130 95
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "State Game Land (NCWRC)"
+      EXPRESSION "3300"
+          STYLE
+        OUTLINECOLOR 151 144 0
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   151 144 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "State Forest"
+      EXPRESSION "3400"
+          STYLE
+        OUTLINECOLOR 177 31 44
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  177 31 44
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "State Department of Agriculture"
+      EXPRESSION "3500"
+          STYLE
+        OUTLINECOLOR 166 228 33
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  166 228 33
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Coastal/Nat. Estuarine Res. Reserve (NCDENR-DCM)"
+      EXPRESSION "3600"
+          STYLE
+        OUTLINECOLOR 2 218 255
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   2 218 255
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Regional Government Lands"
+      EXPRESSION "4100"
+          STYLE
+        OUTLINECOLOR 163 217 80
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   163 217 80
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Local Government Park/Watershed Protection"
+      EXPRESSION "5000"
+          STYLE
+        OUTLINECOLOR 2 38 100
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  2 38 100
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    CLASS
+      NAME "Non-Governmental Organization Preserve/Easement"
+      EXPRESSION "6000"
+          STYLE
+        OUTLINECOLOR 253 164 158
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR   253 164 158
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    #########################
+    ##needs correct color
+    CLASS
+      NAME "Private (conservation easement/deed restriction)"
+      EXPRESSION "7000"
+          STYLE
+        OUTLINECOLOR 0 0 0
+        WIDTH 1
+      END
+      STYLE
+            SYMBOL 'hatch-lines'
+            COLOR  0 0 0
+        ANGLE 60
+        SIZE 10
+        WIDTH 1
+      END
+    END
+    TEMPLATE "dummy.html"
+  END
+
 
 
 
