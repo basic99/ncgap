@@ -60,7 +60,7 @@ $query = "insert into check_mapobj(job_id ) values ( $job_id )";
 pg_query($query);
 
 //create mapobj
-$mapfile = "/var/www/html/ncgap/ncgap.map";
+$mapfile = "/var/www/html/ncgap/test/hello.map";
 $map = ms_newMapObj($mapfile);
 
 //check that script is still running after mapobj creation
