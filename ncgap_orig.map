@@ -1,109 +1,157 @@
 MAP
-     NAME "Hello World"
-     SIZE 400 300
-    FONTSET '/var/www/html/ncgap/myfonts.txt'
-    IMAGETYPE AGGA
-     #IMAGETYPE png
-      EXTENT         124005  4845  935385 318165
-     CONFIG PROJ_LIB "/usr/local/share/proj/"
+  #IMAGETYPE AGGA
+  IMAGETYPE	png
+  EXTENT		 124005  4845  935385 318165
+  SIZE		700 500
+  IMAGECOLOR	255 255 255
+  FONTSET '/var/www/html/ncgap/myfonts.txt'
+   #FONTSET '/var/www/html/ncgap/fontset.txt'
+  #CONFIG "MS_ERRORFILE" "/home/webserv/ms_error.txt"
+  CONFIG "MS_ERRORFILE" "/var/www/html/ncgap/logs/ms_error.txt"
+  #CONFIG  "MS_ERRORFILE" "stderr"
+  DEBUG 5
+  CONFIG PROJ_LIB "/usr/local/share/proj/"
+
+  #WEB
+  #	 IMAGEPATH   '/pub/server_temp/'
+  #	 IMAGEURL  '/server_temp/'
+  #END
+
+ # PROJECTION
+ #   "init=epsg:32119"
+ # END
 
 
-     LAYER
-          STATUS off
-          TYPE point
-          FEATURE
-               POINTS  0.00 0.00 END
-               TEXT "Hello World"
-          END # end feature
-          CLASS
-               STYLE
-                    COLOR 255 0 0
-               END
-               LABEL
-                    TYPE bitmap
-               END
-          END
-     END
+  OUTPUTFORMAT
+    NAME 'AGGA'
+    DRIVER AGG/PNG
+    IMAGEMODE RGB
+    FORMATOPTION "INTERLACE=OFF"
+  END
 
-       OUTPUTFORMAT
-         NAME 'AGGA'
-         DRIVER AGG/PNG
-         IMAGEMODE RGB
-         FORMATOPTION "INTERLACE=OFF"
-       END
+  OUTPUTFORMAT
+    NAME mypng
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE rgba
+    EXTENSION "png"
+    TRANSPARENT ON
+   END
 
-       OUTPUTFORMAT
-         NAME mypng
-         DRIVER "GD/PNG"
-         MIMETYPE "image/png"
-         IMAGEMODE rgba
-         EXTENSION "png"
-         TRANSPARENT ON
-        END
+   OUTPUTFORMAT
+    NAME pdfpng
+    DRIVER "GD/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE rgb
+    EXTENSION "png"
+    FORMATOPTION "INTERLACE=OFF"
+   END
 
-        OUTPUTFORMAT
-         NAME pdfpng
-         DRIVER "GD/PNG"
-         MIMETYPE "image/png"
-         IMAGEMODE rgb
-         EXTENSION "png"
-         FORMATOPTION "INTERLACE=OFF"
-        END
+  #LEGEND
+  #  STATUS ON
+  #  KEYSIZE 40 20
+  #  KEYSPACING 5 5
+  #  LABEL
+  #    TYPE truetype
+  #    FONT 'Sans'
+  #    SIZE 32
+  #  END
+  #END
 
-         SYMBOL
-         NAME 'hatch-lines'
-         TYPE HATCH
-       END
+  #SCALEBAR
+  #  IMAGECOLOR 255 255 255
+  #  LABEL
+   #     TYPE truetype
+    #    FONT  "Sans"
+    #    SIZE  10
+    #    OUTLINECOLOR  255 255 255
+    #    COLOR 0 0 0
+   # END
+  #  STYLE 1
+  #  SIZE 100 2
+  #  COLOR 0 0 0
+   # UNITS kilometers
+  #  INTERVALS 1
+  #  TRANSPARENT FALSE
+ #   STATUS EMBED
+ # END
 
-       SYMBOL
-         NAME 'hatch-pattern'
-         TYPE  vector
-         POINTS
-           5 5
-           6 5
-           6 6
-           5 6
-           5 5
-           -1 -1
-           15 15
-           16 15
-           16 16
-           15 16
-           15 15
-         END
-       END
+  SYMBOL
+    NAME 'hatch-lines'
+    TYPE HATCH
+  END
 
-       REFERENCE
-         IMAGE   '/var/www/html/data/ncgap/nc_ref.png'
-         SIZE  150 102
-         EXTENT 83682.9 -146859 970717 475621
-         STATUS ON
-         COLOR -1 -1 -1
-       END
+  SYMBOL
+    NAME 'hatch-pattern'
+    TYPE  vector
+    POINTS
+      5 5
+      6 5
+      6 6
+      5 6
+      5 5
+      -1 -1
+      15 15
+      16 15
+      16 16
+      15 16
+      15 15
+    END
+  END
 
-     LAYER
-         NAME      landcover
-         DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
-         STATUS    on
-         TYPE      RASTER
-         TEMPLATE "dummy.html"
-       END
-        LAYER
-         NAME    elevation
-         DATA    "/var/www/html/data/ncgap/NC_Hillshade.gtiff"
-         STATUS   off
-         TYPE     raster
-       END
+  REFERENCE
+    IMAGE   '/var/www/html/data/ncgap/nc_ref.png'
+    SIZE  150 102
+    EXTENT 83682.9 -146859 970717 475621
+    STATUS ON
+    COLOR -1 -1 -1
+  END
 
-       LAYER
-         NAME    mapcalc
-         DATA    ""
-         STATUS   off
-         TYPE     raster
-         debug on
-       END
 
-        ########################################################################################################
+
+  #############################################################################################################
+  ###BACKGROUND RASTER LAYERS
+  LAYER
+    NAME      landcover
+    DATA      "/var/www/html/data/ncgap/nc_lcov_256.gtiff"
+    STATUS    off
+    TYPE      RASTER
+    TEMPLATE "dummy.html"
+  END
+
+  LAYER
+    NAME    elevation
+    DATA    "/var/www/html/data/ncgap/NC_Hillshade.gtiff"
+    STATUS   off
+    TYPE     raster
+  END
+
+  LAYER
+    NAME    mapcalc
+    DATA    ""
+    STATUS   off
+    TYPE     raster
+    debug on
+  END
+
+  ## for this layer to work it might be necessary to suppress the user-agent string in the request
+  ## do this buy commenting all of the diff of maphttp.c from version 1.21 to 1.22
+  ##  LAYER
+   ##   NAME jpl
+   ##   TYPE RASTER
+   ##   STATUS off
+    ##  CONNECTION "http://wms.jpl.nasa.gov/wms.cgi?"
+    ##  CONNECTIONTYPE WMS
+   ##   METADATA
+    ##    "wms_srs"             "EPSG:4326"
+    ##    "wms_name"            "global_mosaic"
+    ##    "wms_server_version"  "1.1.0"
+     ##   "wms_format"          "image/png"
+     ##   "wms_style"            "pseudo"
+    ##  END
+  ##  END
+
+  ########################################################################################################
   ## range map
   LAYER
     CONNECTIONTYPE postgis
@@ -131,7 +179,7 @@ MAP
     CLASS
       NAME "predicted"
       EXPRESSION "2"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 120 120 120
         COLOR 255 119 0
       END
@@ -139,7 +187,7 @@ MAP
     CLASS
       NAME "confirmed"
       EXPRESSION "3"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 120 120 120
         COLOR 139 69 19
       END
@@ -147,9 +195,9 @@ MAP
     CLASS
       NAME "excluded"
       EXPRESSION "4"
-          STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 120 120 120
+	  	STYLE
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 120 120 120
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -159,16 +207,16 @@ MAP
     CLASS
       NAME "historic"
       EXPRESSION "5"
-          STYLE
-            SYMBOL 'hatch-pattern'
-            COLOR 120 120 120
+	  	STYLE
+	  	  SYMBOL 'hatch-pattern'
+	  	  COLOR 120 120 120
           SIZE 10
           OUTLINECOLOR 120 120 120
         END
       END
     END
 
-     ######################################################################################################3
+  ######################################################################################################3
   ##Foreground layers
   LAYER
     CONNECTIONTYPE postgis
@@ -383,7 +431,7 @@ MAP
     TEMPLATE "dummy.html"
   END
 
-     ###################################################################################
+  ###################################################################################
   ### ownership layer
   LAYER
     CONNECTIONTYPE postgis
@@ -392,9 +440,10 @@ MAP
     DATA "wkb_geometry FROM nc_owner"
     STATUS off
     TYPE POLYGON
-      CLASSITEM "ownc"
+    CLASSITEM "ownc"
     TRANSPARENCY alpha
-     CLASS
+   ## debug 3
+    CLASS
       NAME "Other Federal"
       EXPRESSION "1000"
       STYLE
@@ -409,7 +458,7 @@ MAP
         WIDTH 1
       END
     END
-     CLASS
+    CLASS
       NAME "US Fish and Wildlife Service"
       EXPRESSION "1300"
       STYLE
@@ -651,12 +700,8 @@ MAP
             WIDTH 1
           END
     END
-
-    TEMPLATE "dummy.html"
-
-    END
-
-     ##########################################################################################################################
+  END
+  ##########################################################################################################################
   ##management layer
   LAYER
     CONNECTIONTYPE postgis
@@ -670,13 +715,13 @@ MAP
     CLASS
       NAME "Other Federal Government Land"
       EXPRESSION "1000"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 0 131 255
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR    0 131 255
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR    0 131 255
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -685,13 +730,13 @@ MAP
     CLASS
       NAME "National Wildlife Refuge (USFWS)"
       EXPRESSION "1301"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 168 103 49
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 168 103 49
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 168 103 49
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -700,13 +745,13 @@ MAP
     CLASS
       NAME "Wilderness Area (USFWS)"
       EXPRESSION "1303"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 186 165 0
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  186 165 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  186 165 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -715,13 +760,13 @@ MAP
     CLASS
       NAME "Conservation Easement (USFWS)"
       EXPRESSION "1304"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 215 211 26
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  215 211 26
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  215 211 26
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -730,13 +775,13 @@ MAP
     CLASS
       NAME "US Forest Service"
       EXPRESSION "1400"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 163 254 159
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   163 254 159
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   163 254 159
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -745,13 +790,13 @@ MAP
     CLASS
       NAME "Wilderness Area (USFS)"
       EXPRESSION "1412"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 72 148 24
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 72 148 24
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 72 148 24
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -760,13 +805,13 @@ MAP
     CLASS
       NAME "Department of Defense or Department of Energy"
       EXPRESSION "1500"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 120 120 120
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   120 120 120
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   120 120 120
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -775,13 +820,13 @@ MAP
     CLASS
       NAME "Army Corps of Engineers (DoD)"
       EXPRESSION "1550"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 77 109 98
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   77 109 98
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   77 109 98
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -790,13 +835,13 @@ MAP
     CLASS
       NAME "National Park Service"
       EXPRESSION "1600"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 53 105 5
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  53 105 5
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  53 105 5
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -805,13 +850,13 @@ MAP
     CLASS
       NAME "Other State Government Land"
       EXPRESSION "3000"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 254 0 9
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  254 0 9
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  254 0 9
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -820,13 +865,13 @@ MAP
     CLASS
       NAME "State Park/Lake/Natural/Recreation Area"
       EXPRESSION "3100"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 0 224 4
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR    0 224 4
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR    0 224 4
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -835,13 +880,13 @@ MAP
     CLASS
       NAME "State University"
       EXPRESSION "3200"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 96 130 95
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   96 130 95
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   96 130 95
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -850,13 +895,13 @@ MAP
     CLASS
       NAME "State Game Land (NCWRC)"
       EXPRESSION "3300"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 151 144 0
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   151 144 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   151 144 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -865,13 +910,13 @@ MAP
     CLASS
       NAME "State Forest"
       EXPRESSION "3400"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 177 31 44
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  177 31 44
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  177 31 44
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -880,13 +925,13 @@ MAP
     CLASS
       NAME "State Department of Agriculture"
       EXPRESSION "3500"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 166 228 33
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  166 228 33
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  166 228 33
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -895,13 +940,13 @@ MAP
     CLASS
       NAME "Coastal/Nat. Estuarine Res. Reserve (NCDENR-DCM)"
       EXPRESSION "3600"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 2 218 255
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   2 218 255
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   2 218 255
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -910,13 +955,13 @@ MAP
     CLASS
       NAME "Regional Government Lands"
       EXPRESSION "4100"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 163 217 80
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   163 217 80
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   163 217 80
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -925,13 +970,13 @@ MAP
     CLASS
       NAME "Local Government Park/Watershed Protection"
       EXPRESSION "5000"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 2 38 100
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  2 38 100
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  2 38 100
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -940,13 +985,13 @@ MAP
     CLASS
       NAME "Non-Governmental Organization Preserve/Easement"
       EXPRESSION "6000"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 253 164 158
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   253 164 158
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   253 164 158
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -957,24 +1002,22 @@ MAP
     CLASS
       NAME "Private (conservation easement/deed restriction)"
       EXPRESSION "7000"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 0 0 0
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  0 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  0 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
       END
     END
-    TEMPLATE "dummy.html"
   END
-
   ###########################################################################################################
-  ## status layer - not working debug
-    LAYER
+  ## status layer
+  LAYER
     CONNECTIONTYPE postgis
     NAME "gapsta"
     CONNECTION "user=postgres  dbname=ncgap host=localhost"
@@ -986,13 +1029,13 @@ MAP
     CLASS
       NAME "1-Permanent (encouraged natural processes)"
       EXPRESSION "1"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 3 38 92
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR  3 38 92
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR  3 38 92
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1001,13 +1044,13 @@ MAP
     CLASS
       NAME "2-Permanent (suppressed natural processes)"
       EXPRESSION "2"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 47 92 149
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR     47 92 149
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR     47 92 149
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1016,21 +1059,20 @@ MAP
     CLASS
       NAME "3-Permanent (intensive anthropogenic disturbance)"
       EXPRESSION "3"
-          STYLE
+	  	STYLE
         OUTLINECOLOR 60 131 237
         WIDTH 1
       END
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR   60 131 237
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR   60 131 237
         ANGLE 60
         SIZE 10
         WIDTH 1
       END
     END
   END
-
-   ########################################################################################################
+  ########################################################################################################
   ## maps to draw selected aoi
 
   LAYER
@@ -1043,8 +1085,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1065,8 +1107,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1088,8 +1130,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1110,8 +1152,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1132,8 +1174,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1154,8 +1196,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1176,8 +1218,8 @@ MAP
     TRANSPARENCY alpha
     CLASS
       STYLE
-            SYMBOL 'hatch-lines'
-            COLOR 255 0 0
+	  	  SYMBOL 'hatch-lines'
+	  	  COLOR 255 0 0
         ANGLE 60
         SIZE 10
         WIDTH 1
@@ -1227,9 +1269,4 @@ MAP
       END
     END
   END
-
-
-
-
-
 END
