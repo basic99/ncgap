@@ -53,6 +53,8 @@ cp  mapscript/php3/php_mapscript.so  /usr/local/lib/php/extensions
 
 http://mapserver.org/installation/php.html
 
+IMPORTANT
+use absolute path for mapfile
 </FilesMatch>
 Alias /server_temp/  /pub/server_temp/
 <Directory "/pub/server_temp">
