@@ -62,3 +62,7 @@ Alias /server_temp/  /pub/server_temp/
     Require all granted
     Allow from all
 </Directory>
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/ch-TigerVNC.html
+
+systemctl start vncserver@:3.service
