@@ -19,7 +19,7 @@ import string
 import logging, traceback
 
 # cwd = os.path.dirname(os.path.realpath(__file__))
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('cron dataclip')
 logger.setLevel(logging.DEBUG)
 fh = logging.FileHandler('/var/log/gap/logs.log')
 formatter = logging.Formatter(
