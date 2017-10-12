@@ -82,6 +82,7 @@ set all map paths to absolute
 remember selinux
 
 */15 * * * *  /root/scripts/cron_dataclip  > /dev/null 2>&1
+
 /etc/cron.daily
 cleanup_daily
 diskcheck_metacomet
