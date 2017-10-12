@@ -45,8 +45,8 @@ def swgap_dnld():
         for req in cur:
             dd_pks.append(int(req['dd_pk']))
 
-            logging.info("request for swgap download from %s" % req['email'])
-            logging.debug(dict(req))
+            logger.info("request for swgap download from %s" % req['email'])
+            logger.debug(dict(req))
             tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
             os.mkdir(tmp_dir)
 
@@ -108,7 +108,7 @@ def swgap_dnld():
             for line in message:
                 mailer.write(line)
             mailer.close()
-            logging.info("request  processed for swgap download from %s" % req['email'])
+            logger.info("request  processed for swgap download from %s" % req['email'])
 
         #update request as complete
         for pk in dd_pks:
@@ -118,8 +118,8 @@ def swgap_dnld():
         conn.close()
 
     except:
-        logging.error( "Something went wrong with swgap download request")
-        logging.error(traceback.format_exc())
+        logger.error( "Something went wrong with swgap download request")
+        logger.error(traceback.format_exc())
         conn.rollback()
         cur.close()
         conn.close()
@@ -137,9 +137,9 @@ def segap_dnld():
 
         #loop through all requests, ie chkd is false
         for req in cur:
-            logging.debug(dict(req))
+            logger.debug(dict(req))
             dd_pks.append(int(req['dd_pk']))
-            logging.info("request for segap download from %s" % req['email'])
+            logger.info("request for segap download from %s" % req['email'])
             tmp_dir = '/var/tmp/zip%s' % random.randint(1000, 1000000)
             os.mkdir(tmp_dir)
 
@@ -228,7 +228,7 @@ def segap_dnld():
             for line in message:
                 mailer.write(line)
             mailer.close()
-            logging.info("request  processed for segap download from %s" % req['email'])
+            logger.info("request  processed for segap download from %s" % req['email'])
 
         #update request as complete
         for pk in dd_pks:
@@ -238,8 +238,8 @@ def segap_dnld():
         conn.close()
 
     except:
-        logging.error( "Something went wrong with segap download request")
-        logging.error(traceback.format_exc())
+        logger.error( "Something went wrong with segap download request")
+        logger.error(traceback.format_exc())
         conn.rollback()
         cur.close()
         conn.close()
@@ -247,6 +247,7 @@ def segap_dnld():
 
 
 def prgap_dnld():
+    logger.debug("prgap_dnld")
 
     try:
 
@@ -258,8 +259,8 @@ def prgap_dnld():
         #loop through all requests, ie chkd is false
         for req in cur:
             dd_pks.append(int(req['dd_pk']))
-            logging.debug(dict(req))
-            logging.info("request for prgap download from %s" % req['email'])
+            logger.debug(dict(req))
+            logger.info("request for prgap download from %s" % req['email'])
             tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
             os.mkdir(tmp_dir)
 
@@ -325,7 +326,7 @@ def prgap_dnld():
             for line in message:
                 mailer.write(line)
             mailer.close()
-            logging.info("request  processed for prgap download from %s" % req['email'])
+            logger.info("request  processed for prgap download from %s" % req['email'])
 
         #update request as complete
         for pk in dd_pks:
@@ -335,8 +336,8 @@ def prgap_dnld():
         conn.close()
 
     except:
-        logging.error( "Something went wrong with prgap download request")
-        logging.error(traceback.format_exc())
+        logger.error( "Something went wrong with prgap download request")
+        logger.error(traceback.format_exc())
         conn.rollback()
         cur.close()
         conn.close()
@@ -354,8 +355,8 @@ def ncgap_dnld():
         #loop through all requests, ie chkd is false
         for req in cur:
             dd_pks.append(int(req['dd_pk']))
-            logging.info("request  for ncgap download from %s" % req['email'])
-            logging.debug(dict(req))
+            logger.info("request  for ncgap download from %s" % req['email'])
+            logger.debug(dict(req))
             tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
             os.mkdir(tmp_dir)
 
@@ -429,7 +430,7 @@ def ncgap_dnld():
             for line in message:
                 mailer.write(line)
             mailer.close()
-            logging.info("request  processed for ncgap download from %s" % req['email'])
+            logger.info("request  processed for ncgap download from %s" % req['email'])
 
         #update request as complete
         for pk in dd_pks:
@@ -439,16 +440,16 @@ def ncgap_dnld():
         conn.close()
 
     except:
-        logging.error( "Something went wrong with ncgap download request")
-        logging.error(traceback.format_exc())
+        logger.error( "Something went wrong with ncgap download request")
+        logger.error(traceback.format_exc())
         conn.rollback()
         cur.close()
         conn.close()
 
-logfile = '/var/log/datadnld.log'
-logging.basicConfig(filename=logfile,
-                    level=logging.INFO,    #DEBUG, INFO, WARNING, ERROR
-                    format='%(asctime)s %(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+# logfile = '/var/log/datadnld.log'
+# logging.basicConfig(filename=logfile,
+#                     level=logging.INFO,    #DEBUG, INFO, WARNING, ERROR
+#                     format='%(asctime)s %(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 # get richness maps created on remote servers with rsync
 #rsync_cmd1 = "rsync -rvv   JimW@152.1.106.242:/pub/richness_export/ /data/richness_export &>/dev/null"
