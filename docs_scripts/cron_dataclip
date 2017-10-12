@@ -298,6 +298,7 @@ def prgap_dnld():
                 pds = re.split(':', str_pds)
                 for i in pds:
                     cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    logger.debug(cmd)
                     os.system(cmd)
 
             #copy aoi shapefile
