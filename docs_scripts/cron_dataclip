@@ -1,0 +1,457 @@
+#!/usr/local/ActivePython-2.7/bin/python
+
+"""
+*/15 * * * *  /root/scripts/cron_dataclip  > /dev/null 2>&1
+
+"""
+
+import psycopg2
+import psycopg2.extras
+import re
+import os
+import random
+import sys
+import datetime
+import decimal
+import string
+import logging, traceback
+
+
+def swgap_dnld():
+
+    try:
+
+        conn = psycopg2.connect("dbname=swgap user=postgres host=/var/run/postgresql")
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select * from data_dnld where chkd is false;")
+        dd_pks = list()
+
+        #loop through all requests, ie chkd is false
+        for req in cur:
+            dd_pks.append(int(req['dd_pk']))
+
+            logging.info("request for swgap download from %s" % req['email'])
+            logging.debug(dict(req))
+            tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
+            os.mkdir(tmp_dir)
+
+            #get richness map if created
+            if  len(req['r_map']) != 0:
+                cmd = "cp /pub/richness_export/%s %s/" % (req['r_map'], tmp_dir)
+                os.system(cmd)
+                f = open(tmp_dir + "/species.txt", "w")
+                text = req['r_species']
+                print >>f, text
+                f.close()
+
+            str_bnd_box = req['bnd_box']
+            bnd_box = re.split(':', str_bnd_box)
+            ulx = bnd_box[0]
+            uly = bnd_box[3]
+            lrx = bnd_box[2]
+            lry = bnd_box[1]
+
+            #copy stewardship layer if requested
+            if req['steward'] == 'on':
+                cmd = "cp /data/dnld_data/SWGAP_Stewardship.zip %s/SWGAP_Stewardship.zip" % tmp_dir
+                os.system(cmd)
+
+            #copy landcover raster if selected
+            if req['lcov'] == 'on':
+                cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/sw_lcover_recl %s/swgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                os.system(cmd)
+
+            #copy pds if selected
+            str_pds = req['pds']
+            if len(str_pds) != 0:
+                pds = re.split(':', str_pds)
+                for i in pds:
+                    cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    os.system(cmd)
+
+            #copy aoi shapefile
+            cmd3 = "/usr/local/bin/ogr2ogr -f \"ESRI Shapefile\" -where \"name='%s'\" %s/aoi PG:'dbname=swgap host=127.0.0.1 user=postgres password=ghjk987' aoi &>/dev/null" % (req['aoi_name'], tmp_dir)
+            os.system(cmd3)
+
+            #create zip file
+            user_name = req['username']
+            zip_name = user_name + '%s' % random.randint(1000, 100000)
+            cmd2 = 'find %s -name "*" | zip -j  %s -@  &>/dev/null' % (tmp_dir, '/var/www/html/datazip/%s' % zip_name)
+            os.system(cmd2)
+
+            #remove temp directory
+            os.system('rm -rf %s' % tmp_dir)
+
+            #mail user name of zip file
+            message = []
+            message.append("To: %s\n" % req['email'])
+            message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
+            message.append("Subject: Data download ready for swgap\n\n")
+            message.append("The zip file of Southwest GAP layers you selected is ready \n")
+            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
+            for line in message:
+                mailer.write(line)
+            mailer.close()
+            logging.info("request  processed for swgap download from %s" % req['email'])
+
+        #update request as complete
+        for pk in dd_pks:
+            cur.execute("update data_dnld set chkd = true where dd_pk = %s", (pk, ))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    except:
+        logging.error( "Something went wrong with swgap download request")
+        logging.error(traceback.format_exc())
+        conn.rollback()
+        cur.close()
+        conn.close()
+
+
+
+
+def segap_dnld():
+
+    try:
+        conn = psycopg2.connect("dbname=segap user=postgres host=/var/run/postgresql")
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select * from data_dnld where chkd is false;")
+        dd_pks = list()
+
+        #loop through all requests, ie chkd is false
+        for req in cur:
+            logging.debug(dict(req))
+            dd_pks.append(int(req['dd_pk']))
+            logging.info("request for segap download from %s" % req['email'])
+            tmp_dir = '/var/tmp/zip%s' % random.randint(1000, 1000000)
+            os.mkdir(tmp_dir)
+
+            #get richness map if created
+            if  len(req['r_map']) != 0:
+                cmd = "cp /pub/richness_export/%s %s/" % (req['r_map'], tmp_dir)
+                os.system(cmd)
+                f = open(tmp_dir + "/species.txt", "w")
+                text = req['r_species']
+                print >>f, text
+                f.close()
+
+
+            str_bnd_box = req['bnd_box']
+            #print str_bnd_box
+            bnd_box = re.split(':', str_bnd_box)
+            grass_ulx = decimal.Decimal(412500)
+            grass_uly = decimal.Decimal(1966462)
+            grass_lrx = decimal.Decimal(1838368)
+            grass_lry = decimal.Decimal(261072)
+            ulx = grass_ulx.max(decimal.Decimal(bnd_box[0]))
+            uly = grass_uly.min(decimal.Decimal(bnd_box[3]))
+            lrx = grass_lrx.min(decimal.Decimal(bnd_box[2]))
+            lry = grass_lry.max(decimal.Decimal(bnd_box[1]))
+
+            #copy stewardship layer if requested
+            #if req['steward'] == 'on':
+                #cmd = "cp /data/dnld_data/SWGAP_Stewardship.zip %s/SWGAP_Stewardship.zip" % tmp_dir
+                #print cmd
+                #os.system(cmd)
+
+            #copy landcover raster if selected
+            if req['lcov'] == 'on':
+                cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/se_landcover_recl %s/segap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                #print cmd
+                os.system(cmd)
+                cmd = "cp /data/dnld_data/segap/lc_segap_legend.pdf %s/" %  tmp_dir
+                os.system(cmd)
+                cmd = "cp /data/dnld_data/segap/lc_segap_legend.xlsx %s/" %  tmp_dir
+                os.system(cmd)
+                cmd = "cp /data/dnld_data/segap/lc_segap_metadata.htm %s/" %  tmp_dir
+                os.system(cmd)
+                cmd = "cp /data/dnld_data/segap/lc_segap_legend_graphic.pdf %s/" %  tmp_dir
+                os.system(cmd)
+
+
+            #copy pds if selected
+            str_pds = req['pds']
+            if len(str_pds) != 0:
+                cmd = 'cp /var/www/html/graphics/segap/predicted_leg.png %s/' % tmp_dir
+                os.system(cmd)
+                pds = re.split(':', str_pds)
+                for i in pds:
+                    cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    os.system(cmd)
+                    code = string.upper(i)
+                    code = string.replace(code, "D_A", "SppReport_a")
+                    code = string.replace(code, "D_B", "SppReport_b")
+                    code = string.replace(code, "D_R", "SppReport_r")
+                    code = string.replace(code, "D_M", "SppReport_m")
+                    cmd = 'cp /data/dnld_data/segap/reports/%s.pdf %s/' % (code, tmp_dir)
+                    os.system(cmd)
+
+
+            #copy aoi shapefile
+            cmd3 = "/usr/local/bin/ogr2ogr -f \"ESRI Shapefile\" -where \"name='%s'\" %s/aoi PG:'dbname=segap host=127.0.0.1 user=postgres ' aoi &>/dev/null" % (req['aoi_name'], tmp_dir)
+            os.system(cmd3)
+
+            #create zip file
+            user_name = req['username']
+            zip_name = user_name + '%s' % random.randint(1000, 100000)
+            cmd2 = 'find %s -name "*" | zip -j  %s -@ &>/dev/null' % (tmp_dir, '/var/www/html/datazip/%s' % zip_name)
+            os.system(cmd2)
+
+            #remove temp directory
+            os.system('rm -rf %s' % tmp_dir)
+
+            #mail user name of zip file
+            message = []
+            message.append("To: %s\n" % req['email'])
+            message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
+            message.append("Subject: Data download ready for segap\n\n")
+            message.append("The zip file of Southeast GAP layers you selected is ready \n")
+            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
+            for line in message:
+                mailer.write(line)
+            mailer.close()
+            logging.info("request  processed for segap download from %s" % req['email'])
+
+        #update request as complete
+        for pk in dd_pks:
+            cur.execute("update data_dnld set chkd = true where dd_pk = %s", (pk, ))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    except:
+        logging.error( "Something went wrong with segap download request")
+        logging.error(traceback.format_exc())
+        conn.rollback()
+        cur.close()
+        conn.close()
+
+
+
+def prgap_dnld():
+
+    try:
+
+        conn = psycopg2.connect("dbname=prgap user=postgres host=/var/run/postgresql")
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select * from data_dnld where chkd is false;")
+        dd_pks = list()
+
+        #loop through all requests, ie chkd is false
+        for req in cur:
+            dd_pks.append(int(req['dd_pk']))
+            logging.debug(dict(req))
+            logging.info("request for prgap download from %s" % req['email'])
+            tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
+            os.mkdir(tmp_dir)
+
+
+            str_bnd_box = req['bnd_box']
+            bnd_box = re.split(':', str_bnd_box)
+            ulx = bnd_box[0]
+            uly = bnd_box[3]
+            lrx = bnd_box[2]
+            lry = bnd_box[1]
+
+            #get richness map if created
+            if  len(req['r_map']) != 0:
+                cmd = "cp /pub/richness_export/%s %s/" % (req['r_map'], tmp_dir)
+                os.system(cmd)
+                f = open(tmp_dir + "/species.txt", "w")
+                text = req['r_species']
+                print >>f, text
+                f.close()
+
+            #copy stewardship layer if requested
+            if req['steward'] == 'on':
+                cmd = "cp /data/dnld_data/PRGAP_LandStewardship.zip %s/PRGAP_LandStewardship.zip" % tmp_dir
+                #print cmd
+                os.system(cmd)
+
+            #copy landcover raster if selected
+            if req['lcov'] == 'on':
+                cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/pr_lcov_recl %s/prgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                os.system(cmd)
+
+            #copy pds if selected
+            str_pds = req['pds']
+            if len(str_pds) != 0:
+                pds = re.split(':', str_pds)
+                for i in pds:
+                    cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    os.system(cmd)
+
+            #copy aoi shapefile
+            cmd3 = "/usr/local/bin/ogr2ogr -f \"ESRI Shapefile\" -where \"name='%s'\" %s/aoi PG:'dbname=prgap host=127.0.0.1 user=postgres ' aoi &>/dev/null" % (req['aoi_name'], tmp_dir)
+            #print cmd3
+            os.system(cmd3)
+
+            #create zip file
+            user_name = req['username']
+            zip_name = user_name + '%s' % random.randint(1000, 100000)
+            cmd2 = 'find %s -name "*" | zip -j  %s -@ &>/dev/null' % (tmp_dir, '/var/www/html/datazip/%s' % zip_name)
+            os.system(cmd2)
+
+            #remove temp directory
+            os.system('rm -rf %s' % tmp_dir)
+
+
+            #mail user name of zip file
+            message = []
+            message.append("To: %s\n" % req['email'])
+            message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
+            message.append("Subject: Data download ready for prgap\n\n")
+            message.append("The zip file of Puerto Rico GAP layers you selected is ready \n")
+            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
+            for line in message:
+                mailer.write(line)
+            mailer.close()
+            logging.info("request  processed for prgap download from %s" % req['email'])
+
+        #update request as complete
+        for pk in dd_pks:
+            cur.execute("update data_dnld set chkd = true where dd_pk = %s", (pk, ))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    except:
+        logging.error( "Something went wrong with prgap download request")
+        logging.error(traceback.format_exc())
+        conn.rollback()
+        cur.close()
+        conn.close()
+
+
+def ncgap_dnld():
+    try:
+
+        conn = psycopg2.connect("dbname=ncgap user=postgres host=/var/run/postgresql")
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select * from data_dnld where chkd is false;")
+        dd_pks = list()
+
+
+        #loop through all requests, ie chkd is false
+        for req in cur:
+            dd_pks.append(int(req['dd_pk']))
+            logging.info("request  for ncgap download from %s" % req['email'])
+            logging.debug(dict(req))
+            tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
+            os.mkdir(tmp_dir)
+
+
+            #get bounds, but inside max extent of grass map
+            str_bnd_box = req['bnd_box']
+            bnd_box = re.split(':', str_bnd_box)
+            grass_ulx = decimal.Decimal(124005)
+            grass_uly = decimal.Decimal(318165)
+            grass_lrx = decimal.Decimal(935385)
+            grass_lry = decimal.Decimal(4845)
+            ulx = grass_ulx.max(decimal.Decimal(bnd_box[0]))
+            uly = grass_uly.min(decimal.Decimal(bnd_box[3]))
+            lrx = grass_lrx.min(decimal.Decimal(bnd_box[2]))
+            lry = grass_lry.max(decimal.Decimal(bnd_box[1]))
+
+            #copy stewardship layer if requested
+            if req['steward'] == 'on':
+                cmd = "cp /data/dnld_data/stwd_ncgap.zip %s/stwd_ncgap.zip" % tmp_dir
+                #print cmd
+                os.system(cmd)
+
+            #get richness map if created
+            if  len(req['r_map']) != 0:
+                cmd = "cp /pub/richness_export/%s %s/" % (req['r_map'], tmp_dir)
+                os.system(cmd)
+                f = open(tmp_dir + "/species.txt", "w")
+                text = req['r_species']
+                print >>f, text
+                f.close()
+
+            #copy landcover raster if selected
+            if req['lcov'] == 'on':
+                cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/nc_lcov_256 %s/ncgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                os.system(cmd)
+
+            #copy pds if selected
+            str_pds = req['pds']
+            if len(str_pds) != 0:
+                pds = re.split(':', str_pds)
+                for i in pds:
+                    cmd = '/usr/local/gdal-1.10.1/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    os.system(cmd)
+
+            #copy aoi shapefile
+            cmd3 = "/usr/local/bin/ogr2ogr -f \"ESRI Shapefile\" -where \"name='%s'\" %s/aoi PG:'dbname=ncgap host=127.0.0.1 user=postgres' aoi &>/dev/null" % (req['aoi_name'], tmp_dir)
+            os.system(cmd3)
+
+            #create zip file
+            user_name = req['username']
+            zip_name = user_name + '%s' % random.randint(1000, 100000)
+            cmd2 = 'find %s -name "*" | zip -j  %s -@ &>/dev/null' % (tmp_dir, '/var/www/html/datazip/%s' % zip_name)
+            os.system(cmd2)
+
+            #remove temp directory
+            os.system('rm -rf %s' % tmp_dir)
+
+            #update request as complete
+            #q = "update data_dnld set chkd = true where dd_pk = %s" % req['dd_pk']
+            #con_nc.query(q)
+
+
+            #mail user name of zip file
+            message = []
+            message.append("To: %s\n" % req['email'])
+            message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
+            message.append("Subject: Data download ready for ncgap\n\n")
+            message.append("The zip file of North Carolina GAP layers you selected is ready \n")
+            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
+            for line in message:
+                mailer.write(line)
+            mailer.close()
+            logging.info("request  processed for ncgap download from %s" % req['email'])
+
+        #update request as complete
+        for pk in dd_pks:
+            cur.execute("update data_dnld set chkd = true where dd_pk = %s", (pk, ))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    except:
+        logging.error( "Something went wrong with ncgap download request")
+        logging.error(traceback.format_exc())
+        conn.rollback()
+        cur.close()
+        conn.close()
+
+logfile = '/var/log/datadnld.log'
+logging.basicConfig(filename=logfile,
+                    level=logging.INFO,    #DEBUG, INFO, WARNING, ERROR
+                    format='%(asctime)s %(levelname)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+# get richness maps created on remote servers with rsync
+#rsync_cmd1 = "rsync -rvv   JimW@152.1.106.242:/pub/richness_export/ /data/richness_export &>/dev/null"
+#rsync_cmd2 = "rsync -rvv   manhattan@192.168.1.17:/pub/richness_export/ /data/richness_export"
+
+
+#try:
+    #os.system(rsync_cmd1)
+#except:
+    #logging.error( "Something went wrong with rsync of richness map")
+    #logging.error(traceback.format_exc())
+
+
+swgap_dnld()
+segap_dnld()
+prgap_dnld()
+ncgap_dnld()
+
+
+
+

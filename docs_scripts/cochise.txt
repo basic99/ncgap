@@ -64,5 +64,19 @@ Alias /server_temp/  /pub/server_temp/
 </Directory>
 
 https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/ch-TigerVNC.html
-
 systemctl start vncserver@:3.service
+https://cat.pdx.edu/linux/secure-vnc-in-linux.html
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-14-04
+https://wiki.centos.org/HowTos/VNC-Server
+
+skip remote desktop...
+try starting grass with ssh export
+
+ easy_install wxPython
+
+gdal - ./configure --with-pg --with-png=no
+
+grass -  CFLAGS="-g -Wall" ./configure  --enable-64bit --with-libs=/usr/lib64 --with-wxwidgets=/usr/local/wxPython-src-2.9.5.0/wx-config
+
+set all map paths to absolute
+remember selinux
