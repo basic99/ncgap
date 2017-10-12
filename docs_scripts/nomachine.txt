@@ -1,0 +1,38 @@
+jim@descartes ~ $ sudo dpkg -i nomachine_5.3.10_6_amd64.deb
+[sudo] password for jim:
+Selecting previously unselected package nomachine.
+(Reading database ... 191910 files and directories currently installed.)
+Preparing to unpack nomachine_5.3.10_6_amd64.deb ...
+Unpacking nomachine (5.3.10-6) ...
+Setting up nomachine (5.3.10-6) ...
+NX> 701 Starting update at: Sat Aug 12 16:05:53 2017.
+NX> 701 Updating: nxclient version: 5.3.10.
+NX> 701 Using installation profile: LinuxMint.
+NX> 701 Update log is: /usr/NX/var/log/nxupdate.log.
+
+
+NX> 701 Updating: nxplayer version: 5.3.10.
+NX> 701 Using installation profile: LinuxMint.
+NX> 701 Update log is: /usr/NX/var/log/nxupdate.log.
+NX> 701 To connect the remote printer to the local desktop,
+NX> 701 the user account must be a member of the CUPS System Group: lpadmin.
+NX> 701 Updating: nxnode version: 5.3.10.
+NX> 701 Using installation profile: LinuxMint.
+NX> 701 Update log is: /usr/NX/var/log/nxupdate.log.
+NX> 701 Saving configuration file to: /usr/NX/etc/node.cfg.backup.
+NX> 701 Creating configuration in: /usr/NX/etc/node.cfg.
+NX> 701 Updating: nxserver version: 5.3.10.
+NX> 701 Using installation profile: LinuxMint.
+NX> 701 Update log is: /usr/NX/var/log/nxupdate.log.
+NX> 701 Saving configuration file to: /usr/NX/etc/server.cfg.backup.
+NX> 701 Creating configuration in: /usr/NX/etc/server.cfg.
+NX> 701
+NX> 701 Setup detected that these types of sessions are now available
+NX> 701 on the system: unix-remote
+NX> 701 but not in the NoMachine configuration. To enable them in the
+NX> 701 NoMachine configuration run:
+NX> 701 /usr/NX/scripts/setup/nxnode --availablesessionsetup
+NX> 701
+NX> 701 Update completed at: Sat Aug 12 16:06:22 2017.
+NX> 701 NoMachine was configured to run the following services:
+NX> 701 NX service on port: 4000

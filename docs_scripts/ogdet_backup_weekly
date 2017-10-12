@@ -1,0 +1,99 @@
+#!/usr/bin/python
+
+import datetime
+import os
+import pg
+import glob
+import pwd
+
+
+"""
+ogdet_backup_weekly
+
+"""
+
+
+querystr_aoi = 'delete from aoi where username is null'
+querystr_dnld = 'delete from data_dnld'
+querystr_nc_reports = 'delete from nc_reports'
+querystr_se_reports = 'delete from se_reports2'
+querystr_sw_reports = 'delete from sw_reports'
+querystr_mapobj = 'delete from check_mapobj'
+
+
+
+#delete unsaved aoi from ncgap
+ncgap_con =  pg.connect(dbname='ncgap', host='localhost', user='postgres')
+ncgap_con.query(querystr_aoi)
+ncgap_con.query(querystr_dnld)
+ncgap_con.query(querystr_nc_reports)
+ncgap_con.query(querystr_mapobj)
+
+#delete unsaved aoi from swgap
+swgap_con =  pg.connect(dbname='swgap', host='localhost', user='postgres')
+swgap_con.query(querystr_aoi)
+swgap_con.query(querystr_sw_reports)
+swgap_con.query(querystr_dnld)
+swgap_con.query(querystr_mapobj)
+
+#delete unsaved aoi from segap
+segap_con =  pg.connect(dbname='segap', host='localhost', user='postgres')
+segap_con.query(querystr_aoi)
+segap_con.query(querystr_se_reports)
+segap_con.query(querystr_dnld)
+segap_con.query(querystr_mapobj)
+
+#delete unsaved aoi from prgap
+prgap_con =  pg.connect(dbname='prgap', host='localhost', user='postgres')
+prgap_con.query(querystr_aoi)
+prgap_con.query(querystr_dnld)
+prgap_con.query(querystr_mapobj)
+
+
+date_obj = datetime.datetime.today()
+ncgap_file = date_obj.strftime("ncgap_%m_%d_%Y")
+swgap_file = date_obj.strftime("swgap_%m_%d_%Y")
+segap_file = date_obj.strftime("segap_%m_%d_%Y")
+prgap_file = date_obj.strftime("prgap_%m_%d_%Y")
+
+pos_id = pwd.getpwnam('postgres')
+#print pos_id[2]
+os.setuid(pos_id[2])
+
+
+#dump ncgap
+ncgap_dump1 = "pg_dump -h /var/run/postgresql -Fc ncgap > /pub/ogdet_db_weekly/%s.dump" % ncgap_file
+ncgap_dump2 = "pg_dump -h /var/run/postgresql  ncgap > /pub/ogdet_db_weekly/%s.sql" % ncgap_file
+os.system(ncgap_dump1)
+os.system(ncgap_dump2)
+
+
+#dump swgap
+swgap_dump1 = "pg_dump  -h /var/run/postgresql -Fc swgap > /pub/ogdet_db_weekly/%s.dump" % swgap_file
+swgap_dump2 = "pg_dump  -h /var/run/postgresql  swgap > /pub/ogdet_db_weekly/%s.sql" % swgap_file
+os.system(swgap_dump1)
+os.system(swgap_dump2)
+
+
+#dump segap
+segap_dump1 = "pg_dump  -h /var/run/postgresql -Fc segap > /pub/ogdet_db_weekly/%s.dump" % segap_file
+segap_dump2 = "pg_dump  -h /var/run/postgresql  segap > /pub/ogdet_db_weekly/%s.sql" % segap_file
+os.system(segap_dump1)
+os.system(segap_dump2)
+
+
+#dump prgap
+prgap_dump1 = "pg_dump  -h /var/run/postgresql -Fc prgap > /pub/ogdet_db_weekly/%s.dump" % prgap_file
+prgap_dump2 = "pg_dump  -h /var/run/postgresql  prgap > /pub/ogdet_db_weekly/%s.sql" % prgap_file
+os.system(prgap_dump1)
+os.system(prgap_dump2)
+
+
+#delete dump files older than 30 days
+filelist = glob.glob('/pub/ogdet_db_weekly/*')
+for f in filelist:
+   file_date = datetime.datetime.fromtimestamp(os.path.getmtime(f))
+   file_age =  (date_obj - file_date).days
+   if file_age > 30:
+      cmd = 'rm %s' % f
+      os.system(cmd)

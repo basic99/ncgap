@@ -1,0 +1,71 @@
+#!/usr/bin/python
+
+from string import *
+import re
+import string
+import os
+import sys, os, string, fnmatch
+from socket import gethostname
+
+"""
+/etc/cron.daily
+
+"""
+
+hostname = gethostname()
+list = os.popen("df -hP -x none -x tmpfs -x iso9660 -x afs").readlines()
+
+
+########## edit values in conf and cutoff #################
+conf = {
+'mailTo' : 'steve_williams@ncsu.edu, jbwhite2@ncsu.edu',
+'mailFrom' : 'BaSIC_WebMaster@ncsu.edu'
+}
+
+#cutoff = {
+#'/dev/sda2' : 85,
+#'/dev/sdc1' : 85,
+#'/dev/sda5' : 80,
+#'/dev/sdb1' : 70,
+#'/dev/sda1' : 70
+#}
+
+cutoff = {
+    '/dev/sda1' : 85,
+    '/dev/sda6' : 85,
+    '/dev/sdb1' : 85,
+    '/dev/sda5' : 85,
+    '/dev/sda2' : 85,
+    '/dev/sdc1' : 85
+}
+###########################################################
+
+message = []
+message.append("To: %s\n" % conf['mailTo'])
+message.append("From: %s\n" % conf['mailFrom'])
+message.append("Subject: Low disk space warning\n\n")
+
+message.append("Disk usage for %s:\n\n" % hostname)
+
+high = 0
+
+for line in list[1:]:
+    (volume, total, used, avail, pct, mountpt) = string.split(line)
+    nPct = long(pct[:-1])
+    mountpt = string.strip(mountpt)
+    if cutoff.has_key(volume):
+        if (nPct < long(cutoff[volume])): continue
+    high = 1
+    message.append("%s (%s) is %s full -- %s of %s used, %s remain\n" %
+                   (volume, mountpt, pct, used, total, avail))
+
+if (high != 0):
+    # mail out the message
+    mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
+    for line in message:
+        mailer.write(line)
+
+
+    mailer.close()
+
+sys.exit(0
