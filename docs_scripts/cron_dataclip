@@ -35,6 +35,7 @@ logger.addHandler(fh)
 def swgap_dnld():
 
     try:
+        # host=/var/run/postgresql
 
         conn = psycopg2.connect("dbname=swgap user=postgres")
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -262,7 +263,9 @@ def prgap_dnld():
             logger.debug(dict(req))
             logger.info("request for prgap download from %s" % req['email'])
             tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
+            logger.debug(tmp_dir)
             os.mkdir(tmp_dir)
+            exit()
 
 
             str_bnd_box = req['bnd_box']
@@ -313,7 +316,7 @@ def prgap_dnld():
             os.system(cmd2)
 
             #remove temp directory
-            os.system('rm -rf %s' % tmp_dir)
+            # os.system('rm -rf %s' % tmp_dir)
 
 
             #mail user name of zip file
@@ -415,12 +418,12 @@ def ncgap_dnld():
             #remove temp directory
             os.system('rm -rf %s' % tmp_dir)
 
-            #update request as complete
-            #q = "update data_dnld set chkd = true where dd_pk = %s" % req['dd_pk']
-            #con_nc.query(q)
+            # update request as complete
+            # q = "update data_dnld set chkd = true where dd_pk = %s" % req['dd_pk']
+            # con_nc.query(q)
 
 
-            #mail user name of zip file
+            # mail user name of zip file
             message = []
             message.append("To: %s\n" % req['email'])
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
@@ -433,7 +436,7 @@ def ncgap_dnld():
             mailer.close()
             logger.info("request  processed for ncgap download from %s" % req['email'])
 
-        #update request as complete
+        # update request as complete
         for pk in dd_pks:
             cur.execute("update data_dnld set chkd = true where dd_pk = %s", (pk, ))
         conn.commit()
@@ -441,7 +444,7 @@ def ncgap_dnld():
         conn.close()
 
     except:
-        logger.error( "Something went wrong with ncgap download request")
+        logger.error("Something went wrong with ncgap download request")
         logger.error(traceback.format_exc())
         conn.rollback()
         cur.close()
