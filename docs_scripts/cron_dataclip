@@ -265,7 +265,7 @@ def prgap_dnld():
             tmp_dir = '/tmp/zip%s' % random.randint(1000, 1000000)
             logger.debug(tmp_dir)
             os.mkdir(tmp_dir)
-            exit()
+            # sys.exit()
 
 
             str_bnd_box = req['bnd_box']
