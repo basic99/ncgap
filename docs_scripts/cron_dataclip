@@ -307,6 +307,7 @@ def prgap_dnld():
             #copy aoi shapefile
             cmd3 = "/usr/local/bin/ogr2ogr -f \"ESRI Shapefile\" -where \"name='%s'\" %s/aoi PG:'dbname=prgap host=127.0.0.1 user=postgres ' aoi &>/dev/null" % (req['aoi_name'], tmp_dir)
             #print cmd3
+            logger.debug(cmd3)
             os.system(cmd3)
 
             #create zip file
@@ -314,6 +315,8 @@ def prgap_dnld():
             zip_name = user_name + '%s' % random.randint(1000, 100000)
             cmd2 = 'find %s -name "*" | zip -j  %s -@ &>/dev/null' % (tmp_dir, '/var/www/html/datazip/%s' % zip_name)
             os.system(cmd2)
+            logger.debug(cmd2)
+
 
             #remove temp directory
             # os.system('rm -rf %s' % tmp_dir)
