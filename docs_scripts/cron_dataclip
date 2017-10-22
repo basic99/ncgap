@@ -74,7 +74,7 @@ def swgap_dnld():
 
             #copy landcover raster if selected
             if req['lcov'] == 'on':
-                cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/sw_lcover_recl %s/swgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/sw_lcover_recl %s/swgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
                 os.system(cmd)
 
             #copy pds if selected
@@ -82,7 +82,7 @@ def swgap_dnld():
             if len(str_pds) != 0:
                 pds = re.split(':', str_pds)
                 for i in pds:
-                    cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southwest/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
                     os.system(cmd)
 
             #copy aoi shapefile
@@ -174,7 +174,7 @@ def segap_dnld():
 
             #copy landcover raster if selected
             if req['lcov'] == 'on':
-                cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/se_landcover_recl %s/segap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/se_landcover_recl %s/segap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
                 #print cmd
                 os.system(cmd)
                 cmd = "cp /data/dnld_data/segap/lc_segap_legend.pdf %s/" %  tmp_dir
@@ -194,7 +194,7 @@ def segap_dnld():
                 os.system(cmd)
                 pds = re.split(':', str_pds)
                 for i in pds:
-                    cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /data/southeast/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
                     os.system(cmd)
                     code = string.upper(i)
                     code = string.replace(code, "D_A", "SppReport_a")
@@ -292,7 +292,7 @@ def prgap_dnld():
 
             #copy landcover raster if selected
             if req['lcov'] == 'on':
-                cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/pr_lcov_recl %s/prgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/pr_lcov_recl %s/prgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
                 os.system(cmd)
 
             #copy pds if selected
@@ -300,7 +300,7 @@ def prgap_dnld():
             if len(str_pds) != 0:
                 pds = re.split(':', str_pds)
                 for i in pds:
-                    cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/puerto_rico/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
                     logger.debug(cmd)
                     os.system(cmd)
 
@@ -317,12 +317,10 @@ def prgap_dnld():
             os.system(cmd2)
             logger.debug(cmd2)
 
+            # remove temp directory
+            os.system('rm -rf %s' % tmp_dir)
 
-            #remove temp directory
-            # os.system('rm -rf %s' % tmp_dir)
-
-
-            #mail user name of zip file
+            # mail user name of zip file
             message = []
             message.append("To: %s\n" % req['email'])
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
@@ -397,7 +395,7 @@ def ncgap_dnld():
 
             #copy landcover raster if selected
             if req['lcov'] == 'on':
-                cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/nc_lcov_256 %s/ncgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
+                cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/nc_lcov_256 %s/ncgap_lcov.tif &>/dev/null' % (ulx, uly, lrx, lry, tmp_dir)
                 os.system(cmd)
 
             #copy pds if selected
@@ -405,7 +403,7 @@ def ncgap_dnld():
             if len(str_pds) != 0:
                 pds = re.split(':', str_pds)
                 for i in pds:
-                    cmd = '/usr/local/bin/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
+                    cmd = '/usr/local/gdal-1.11.5/apps/gdal_translate -ot Byte -projwin %s %s %s %s /pub/grass/n_carolina/PERMANENT/cellhd/%s %s/%s.tif &>/dev/null' % (ulx, uly, lrx, lry, i, tmp_dir, i)
                     os.system(cmd)
 
             #copy aoi shapefile

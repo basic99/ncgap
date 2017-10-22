@@ -93,3 +93,6 @@ temp_cron_hourly
 
 /etc/cron.weekly
 ogdet_backup_weekly
+
+./configure --with-pg --with-grass=/usr/local/grass-6.4.6 --with-png=no
+get gdal-1.11.5 for clip zip app gdal_translate
