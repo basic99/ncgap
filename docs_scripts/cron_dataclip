@@ -104,7 +104,7 @@ def swgap_dnld():
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
             message.append("Subject: Data download ready for swgap\n\n")
             message.append("The zip file of Southwest GAP layers you selected is ready \n")
-            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            message.append("It is available from http://cochise.ncsu.edu/datazip/%s.zip" % zip_name)
             mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
             for line in message:
                 mailer.write(line)
@@ -224,7 +224,7 @@ def segap_dnld():
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
             message.append("Subject: Data download ready for segap\n\n")
             message.append("The zip file of Southeast GAP layers you selected is ready \n")
-            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            message.append("It is available from http://cochise.ncsu.edu/datazip/%s.zip" % zip_name)
             mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
             for line in message:
                 mailer.write(line)
@@ -328,7 +328,7 @@ def prgap_dnld():
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
             message.append("Subject: Data download ready for prgap\n\n")
             message.append("The zip file of Puerto Rico GAP layers you selected is ready \n")
-            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            message.append("It is available from http://cochise.ncsu.edu/datazip/%s.zip" % zip_name)
             mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
             for line in message:
                 mailer.write(line)
@@ -432,7 +432,7 @@ def ncgap_dnld():
             message.append("From: %s\n" % 'BaSIC_WebMaster@ncsu.edu')
             message.append("Subject: Data download ready for ncgap\n\n")
             message.append("The zip file of North Carolina GAP layers you selected is ready \n")
-            message.append("It is available from http://www.gapserve.ncsu.edu/datazip/%s.zip" % zip_name)
+            message.append("It is available from http://cochise.ncsu.edu/datazip/%s.zip" % zip_name)
             mailer = os.popen("%s -t" % '/usr/sbin/sendmail', "w")
             for line in message:
                 mailer.write(line)
