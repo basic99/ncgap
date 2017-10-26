@@ -1,11 +1,11 @@
 <?php
 /**
  * Display small map of AOI and selections for data download
- * 
+ *
  * Collect $_POST data submitted from form fm6 in map2.php or form fm4 in select_species.php and $_SESSION data.
- * Use this to create a map with red bounding box around AOI. 
+ * Use this to create a map with red bounding box around AOI.
  * Use database query for richness species or $rclass->get_species_dnld to display species to select depending on whether in single or multiple mode.
- * 
+ *
  * @package ncgap
  */
 require('nc_range_class.php');
@@ -52,7 +52,7 @@ $(document).ready(function() {
          evt.preventDefault();
 			document.forms[0].submit();
       });
-	check_pd(); //put this last as it will not always run	  
+	check_pd(); //put this last as it will not always run
 });
 function check_pd(){
 	var strelcode = document.forms[0].strelcode.value;
@@ -100,7 +100,7 @@ function poll(){
         var previous = document.forms[0].pds.value;
    }
 
-   
+
 	document.forms[0].strpds.value = previous;
 }
 /* ]]> */
@@ -150,7 +150,8 @@ $aoi_extent->setextent($min_x, $min_y, $max_x, $max_y);
 $extent_save = $min_x.":".$min_y.":".$max_x.":".$max_y;
 
 
-$mapfile = "ncgap.map";
+$mapfile = "/var/www/html/ncgap/ncgap.map";
+
 
 // draw elevation and states layers
 $map = ms_newMapObj($mapfile);
@@ -196,7 +197,7 @@ $mapimage->saveImage($maploc);
 <?php
 if (!empty($richness_map)) {
 	$richness_export = $nc_aoi_class->richnessexport($richness_map);
-?>	
+?>
 
 <tr>
 <td><input type="checkbox" checked="checked" name="richness" /></td><td>richness map</td>
@@ -205,7 +206,7 @@ if (!empty($richness_map)) {
 <td class="none">HHH</td><td class="none">HHHHHHH</td>
 </tr>
 
-<?php 
+<?php
 pg_connect($pg_connect);
 
 
