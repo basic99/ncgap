@@ -1,12 +1,12 @@
 <?php
 /**
  * create PDF using FPDF library
- * 
+ *
  * File gathers $_POST data submitted from form fm5 from map.php or map2.php.
  * Creates MapServer MapObj object, selects layers passed in form.
  * For 300 dpi map set map size 3000 x 1800, for 72 dpi set at 720 x 432.
  * Add legend pages, and create pdf.
- * 
+ *
  * @link http://www.fpdf.org/
  * @package ncgap
  */
@@ -18,11 +18,13 @@ require('nc_config.php');
  */
 require('nc_config.php');
 //set mapfile and load mapscript if not already loaded
-$mapfile = "ncgap.map";
 
-if(!extension_loaded('MapScript')){
-	dl("php_mapscript.so");
-}
+$mapfile = "ncgap.map";
+$mapfile = "/var/www/html/ncgap/ncgap.map";
+
+// if(!extension_loaded('MapScript')){
+// 	dl("php_mapscript.so");
+// }
 
 //get form variables
 $win_w = $_POST['win_w'];
@@ -318,7 +320,7 @@ $pdfmapimage->saveImage($pdfmaploc);
 
 /**
  * Class extends FPDF by adding footer with logo
- * 
+ *
  *
  */
 
