@@ -1,6 +1,7 @@
 <?php
 
-$mapfile = "../ncgap.map";
+// $mapfile = "../ncgap.map";
+$mapfile = "/var/www/html/ncgap/ncgap.map";
 
 require('nc_config.php');
 pg_connect($pg_connect);
@@ -183,7 +184,7 @@ if(preg_match("/landcover/", $query_layer)){
 	}
 }
 
-echo json_encode(array("result"=>$msg)); 
+echo json_encode(array("result"=>$msg));
 ob_flush();
 flush();
 
