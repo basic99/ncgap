@@ -240,13 +240,13 @@ class nc_range_class
   //     }
 
       //call create function
-      if($is_predefined){
-         //submit to zend cache
-         $result = $cache->call('create', array($aoi_predefined, "dummy"));
-      } else {
+      // if($is_predefined){
+      //    //submit to zend cache
+      //    $result = $cache->call('create', array($aoi_predefined, "dummy"));
+      // } else {
          //submit as function not to zend cache for custon AOI
          $result = create($aoi_predefined, $aoi_name);
-      }
+      // }
 
 
       //assign class variable from preceeding calculations
