@@ -1,7 +1,7 @@
 <?php
 /**
  * file contains one class definition
- * 
+ *
  * @package ncgap
  */
 
@@ -12,7 +12,7 @@ $ncdbcon = pg_connect("host=localhost dbname=ncgap user=postgres");
 
 //function to that does work of construction to assign class values
  function create($aoi_predefined, $aoi_name){
-    
+
     global $ncdbcon;
 
     $key_gapown = explode(":", $aoi_predefined['owner_aoi']);
@@ -131,7 +131,7 @@ $ncdbcon = pg_connect("host=localhost dbname=ncgap user=postgres");
           if ($row['intpif'] != 0) $pif_species++;
        }
     }
-    
+
     $result = array();
     $result['range'] = $range;
     $result['strelcodes'] = $strelcodes;
@@ -144,7 +144,7 @@ $ncdbcon = pg_connect("host=localhost dbname=ncgap user=postgres");
     $result['all'] = $all_species;
 
     return $result;
- 
+
  }// end function create
 
 /**
@@ -191,26 +191,26 @@ class nc_range_class
 
 	/**
 	 * From geometry of AOI create array $strelcodes with elcodes as key and 0 or 1 as value depending if species is predicted.
-	 * 
+	 *
 	 * Called from controls3.php. Entry aoi_data from table aoi contains seralized array of primary keys used for predefined aoi.
-	 * Use these keys to look up precalculated range overlaps of range hexagons and predefined aoi and save in array $range 
+	 * Use these keys to look up precalculated range overlaps of range hexagons and predefined aoi and save in array $range
 	 * primary keys of overlapping hexagons. For custom AOI calculate overlap of AOI with range hexagons using PostGIS intersects function.
 	 * Create array $strelcodes from table info_spp and $range array with elcode as key and 0 or 1 as value depending if species is in AOI.
-	 * Use $strelcodes and table info_spp to create array $num_species that has numbers of species by listing status. 
+	 * Use $strelcodes and table info_spp to create array $num_species that has numbers of species by listing status.
 	 *
 	 * @param string $aoi_name
 	 */
 
 	function __construct($aoi_name)
 	{
-		
+
       //get predefined AOI data from database
       global $ncdbcon;
 		$query = "select aoi_data from aoi where name = '{$aoi_name}'";
 		$result = pg_query($ncdbcon, $query);
 		$row = pg_fetch_array($result);
 		$aoi_predefined = unserialize($row['aoi_data']);
-      
+
       //check of AOI is predefined if so set is_predefined to true to submit function to zend cache
       $is_predefined = false;
       if($aoi_predefined){
@@ -218,27 +218,27 @@ class nc_range_class
             if(strlen($v) != 0){$is_predefined = true; break;}
          }
       }
-      
+
       //use zend cache to cache results for function create
-		require_once 'Zend/Loader.php';
-      Zend_Loader::loadClass('Zend_Cache');
-      try{
-         $frontendOptions = array(
-            'lifetime' => null, // cache lifetime no expiration 
-            'automatic_serialization' => true
-         );
-         $backendOptions = array(
-             'cache_dir' => '../../temp/' // Directory where to put the cache files
-         );
-         // getting a Zend_Cache_Core object
-         $cache = Zend_Cache::factory('Function',
-                                      'File',
-                                      $frontendOptions,
-                                      $backendOptions);
-      } catch(Exception $e) {
-        echo $e->getMessage();
-      }
-      
+		// require_once 'Zend/Loader.php';
+  //     Zend_Loader::loadClass('Zend_Cache');
+  //     try{
+  //        $frontendOptions = array(
+  //           'lifetime' => null, // cache lifetime no expiration
+  //           'automatic_serialization' => true
+  //        );
+  //        $backendOptions = array(
+  //            'cache_dir' => '../../temp/' // Directory where to put the cache files
+  //        );
+  //        // getting a Zend_Cache_Core object
+  //        $cache = Zend_Cache::factory('Function',
+  //                                     'File',
+  //                                     $frontendOptions,
+  //                                     $backendOptions);
+  //     } catch(Exception $e) {
+  //       echo $e->getMessage();
+  //     }
+
       //call create function
       if($is_predefined){
          //submit to zend cache
@@ -247,8 +247,8 @@ class nc_range_class
          //submit as function not to zend cache for custon AOI
          $result = create($aoi_predefined, $aoi_name);
       }
-     
-      
+
+
       //assign class variable from preceeding calculations
 		$this->range = $result['range'];
 		$this->strelcodes = $result['strelcodes'];
@@ -267,12 +267,12 @@ class nc_range_class
 
 	/**
 	 * Create SQL query, and calculate numbers of species in AOI for each class.
-	 * 
+	 *
 	 * Function called by controls4.php with data submitted from controls3.php to select listing status to display.
-	 * Create select statement from info_spp, and add where statements according to selections. 
-	 * Run command and loop thru results to get total in each class for AOI. 
+	 * Create select statement from info_spp, and add where statements according to selections.
+	 * Run command and loop thru results to get total in each class for AOI.
 	 * Save results in array $tot_class  and return.
-	 * 
+	 *
 	 * @param string $species
 	 * @param string $sel
 	 * @param string $fed
@@ -437,8 +437,8 @@ class nc_range_class
 
 	/**
 	 * Get list of selected species for select box.
-	 * 
-	 * Use query saved as class variable,  $strelcodes , and $language to output options to 
+	 *
+	 * Use query saved as class variable,  $strelcodes , and $language to output options to
 	 * select element.
 	 *
 	 * @param string $avian
@@ -543,7 +543,7 @@ class nc_range_class
 
 	/**
 	 * Display species on data_download.php.
-	 * 
+	 *
 	 *
 	 * @param string $avian
 	 * @param string $mammal
