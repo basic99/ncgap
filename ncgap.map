@@ -638,9 +638,9 @@ MAP
             WIDTH 1
           END
           STYLE
-            SYMBOL 'hatch-lines'
+            SYMBOL 'hatch-custom'
             COLOR  0 0 0
-            ANGLE 60
+            # ANGLE 60
             SIZE 10
             WIDTH 1
           END
@@ -653,9 +653,9 @@ MAP
             WIDTH 1
           END
           STYLE
-            SYMBOL 'hatch-lines'
+            SYMBOL 'hatch-custom'
             COLOR  0 129 131
-            ANGLE 60
+           #  ANGLE 60
             SIZE 10
             WIDTH 1
           END
