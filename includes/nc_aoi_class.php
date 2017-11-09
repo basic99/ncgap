@@ -1,7 +1,7 @@
 <?php
 /**
  * file contains one class definition
- * 
+ *
  * @package ncgap
  */
 
@@ -20,7 +20,7 @@ putenv("PATH={$PATH}");
 
 /**
  * Main class used for GRASS calculations
- * 
+ *
  * This class has a constructor that takes as a parameter an AOI name.
  * The constructor calculates the bounding box and imports a mask into GRASS
  * Various functions that depend on the AOI can then be called
@@ -30,13 +30,13 @@ putenv("PATH={$PATH}");
 class nc_aoi_class{
 	/**
 	 * Name of AOI, corresponds to name in table aoi.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $aoi_name;
 	/**
 	 * Name of file that contains a blank mask that is used to burn an AOI with gdal_rasterize.
-	 * 
+	 *
 	 * @var string
 	 */
 	private $mask_name;
@@ -68,9 +68,9 @@ class nc_aoi_class{
 
 	/**
 	 * Create new nc_aoi_class object from row in table aoi.
-	 * 
+	 *
 	 * Use parameter to select row in table aoi that has AOI geometry. Use spatial SQL query to calculate bounding box of AOI.
-	 * Run gdal_translate to create blank the size of bounding box. 
+	 * Run gdal_translate to create blank the size of bounding box.
 	 * Run gdal_rasterize to burn AOI into blank. Create GRASS command using r.in.gdal and run command to import AOI mask into GRASS.
 	 *
 	 * @param string $a
@@ -83,6 +83,7 @@ class nc_aoi_class{
 
 		global $ncdbcon;
 
+		ini_set("error_log", "/var/www/html/ncgap/logs/php-error.log");
 		//assign parameter class variable
 		$this->aoi_name = $a;
 
@@ -215,6 +216,7 @@ r.in.gdal input={$blank} output={$blank_file}a &>/dev/null
 cat /var/www/html/ncgap/grass/mask_recl | r.reclass input={$blank_file}a output={$blank_file} &>/dev/null
 GRASS_SCRIPT;
 		//echo $grass_cmd."<br>";
+		error_log($grass_cmd);
 		system($grass_cmd);
 
 	}
@@ -252,7 +254,7 @@ GRASS_SCRIPT;
 
 	/**
 	 * Create land cover report for AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates land cover report for AOI.
 	 * Run command.
 	 *
@@ -271,7 +273,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship management report for AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates management report for AOI.
 	 * Run command.
 	 *
@@ -291,7 +293,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship ownership report for AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates ownership report for AOI.
 	 * Run command.
 	 *
@@ -310,7 +312,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create GAP status report for AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates GAP status report for AOI.
 	 * Run command.
 	 *
@@ -333,7 +335,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create predicted distribution for species report in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates predicted distribution report for species in AOI.
 	 * Run command.
 	 *
@@ -356,7 +358,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create GAP status for species report in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates GAP status report for species in AOI.
 	 * Run command.
 	 *
@@ -379,7 +381,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship ownership for species report in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates stewardship ownership report for species in AOI.
 	 * Run command.
 	 *
@@ -401,7 +403,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship management for species report in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates stewardship management report for species in AOI.
 	 * Run command.
 	 *
@@ -425,7 +427,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create land cover for species report in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc, r.reclass, and r.report that generates land cover report for species in AOI.
 	 * Run command.
 	 *
@@ -452,7 +454,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create land cover for species map in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate map of land cover where species is predicted in AOI.
 	 * Run command.
 	 *
@@ -487,7 +489,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship ownership for species map in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate map of stewardship ownership where species is predicted in AOI.
 	 * Run command.
 	 *
@@ -522,7 +524,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create GAP status  for species map in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate map of GAP status where species is predicted in AOI.
 	 * Run command.
 	 *
@@ -557,7 +559,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create stewardship management for species map in AOI
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate map of stewardship management where species is predicted in AOI.
 	 * Run command.
 	 *
@@ -598,7 +600,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create richness map of selected species.
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate richness map of selected species in AOI.
 	 * Run command.
 	 *
@@ -641,7 +643,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Create richness report for selected species in AOI.
-	 * 
+	 *
 	 * Create GRASS command using r.mapcalc and r.colors to generate richness report of selected species in AOI.
 	 * Run command.
 	 *
@@ -671,7 +673,7 @@ GRASS_SCRIPT;
 
 /**
 	 * Save a copy of current richness map on server for data download.
-	 * 
+	 *
 	 * Create GRASS command with r.out.gdal to convert GRASS map to geotiff. Run command.
 	 *
 	 * @param string $a this value comes from the variable $map_species in map2.php which is the name of the displayed richness map
@@ -681,7 +683,7 @@ GRASS_SCRIPT;
 public function richnessexport($a){
 	$map = "richness".rand(0,9999999).".tif";
 	$str=<<<GRASS_SCRIPT
-r.out.gdal input={$a} format=GTiff type=Byte output=/pub/richness_export/{$map} 
+r.out.gdal input={$a} format=GTiff type=Byte output=/pub/richness_export/{$map}
 GRASS_SCRIPT;
 	system($str);
 	return $map;

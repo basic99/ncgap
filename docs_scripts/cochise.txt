@@ -104,3 +104,7 @@ LoadModule speling_module modules/mod_speling.so
     CheckCaseOnly on
     CheckSpelling on
 </IfModule>
+
+rm -rf /pub/grass/n_carolina/webserv  -- delete webserv mapset from n_carolina
+
+Delete the directory /pub/grass/n_carolina/webserv. Log out of grassmonkey, and log into webserv, start GRASS and create a mapset named webserv. Logout out and back into grassmonkey and run cp /home/webserv/.grassrc6 /var/www/html/ncgap/grassrc.
