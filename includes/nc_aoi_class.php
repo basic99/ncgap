@@ -268,6 +268,7 @@ r.mapcalc {$this->mask_name}calc_lc = '{$this->mask_name}  * nc_lcov' &>/dev/nul
 cat /var/www/html/ncgap/grass/nc_lcov_recl | r.reclass input={$this->mask_name}calc_lc output={$this->mask_name}recl_lc &>/dev/null
 r.report -n map={$this->mask_name}recl_lc units=a,h,p 2>/dev/null
 GRASS_SCRIPT;
+error_log($str);
 		return `$str`;
 }
 
