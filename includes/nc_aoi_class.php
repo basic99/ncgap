@@ -484,6 +484,7 @@ g.region n={$max_y} s={$min_y} w={$min_x} e={$max_x} &>/dev/null
 r.mapcalc {$map} = '{$raster} *  nc_lcov_256' &>/dev/null
 cat  /var/www/html/ncgap/grass/nc_lcov_colors | r.colors map={$map} color=rules &>/dev/null
 GRASS_SCRIPT;
+error_log($str);
 	system($str);
 	return $map;
 }
