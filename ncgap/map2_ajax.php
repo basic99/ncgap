@@ -137,6 +137,7 @@ $mapname = "map".rand(0,9999999).".png";
 $maploc = "{$mspath}{$mapname}";
 
 //get calculated maps for single species or richness from aoi_class, but first test to see if we can use previous map
+error_log($species_layer);
 if (preg_match("/habitat/", $species_layer)) {
 	if ($species_layer != $species_layer_prev) {
 		$map_species = $nc_aoi_class->landcover_map($strelcode);
