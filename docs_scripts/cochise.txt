@@ -98,3 +98,9 @@ ogdet_backup_weekly
 get gdal-1.11.5 for clip zip app gdal_translate
 
 replace hatchlines with hatch-custom
+
+LoadModule speling_module modules/mod_speling.so
+<IfModule mod_speling.c>
+    CheckCaseOnly on
+    CheckSpelling on
+</IfModule>
